@@ -5,9 +5,9 @@ public class Attractor {
     private double x;
     private double y;
 
-    public Attractor() {
-        this.x = 5.0;
-        this.y = 8.0;
+    public Attractor(double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
     public double getX() {
