@@ -1,13 +1,15 @@
 package ru.ifmo.escience.compbiomed.sandbox.agent;
 
-public class Nurse extends Pedestrian {
+public class Nurse extends Medic {
 
-    public Nurse(double x, double y) {
-        super(x, y);
+    private String id;
+
+    public Nurse(final double x, final double y, final long index) {
+        super(x, y, index);
     }
 
-    public Nurse() {
-        this(4.0, 5.0);
+    public Nurse(final long index) {
+        this(4.0, 5.0, index);
     }
 
 }

@@ -8,7 +8,7 @@ public class Agent {
     private double x;
     private double y;
 
-    public Agent(double x, double y) {
+    public Agent(final double x, final double y) {
         this.x = x;
         this.y = y;
     }
@@ -21,7 +21,7 @@ public class Agent {
         return y;
     }
 
-    public double distanceTo(double x, double y) {
+    public double distanceTo(final double x, final double y) {
         return Space.calculateEuclideanDistance(new Point(this.x, this.y), new Point(x, y));
     }
 

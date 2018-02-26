@@ -2,7 +2,8 @@ package ru.ifmo.escience.compbiomed.sandbox.util.math;
 
 public class Space {
 
-    public static double calculateEuclideanDistance(double x1, double y1, double x2, double y2) {
+    public static double calculateEuclideanDistance(final double x1, final double y1,
+                                                    final double x2, final double y2) {
         return Math.sqrt(sqr(x2 - x1) + sqr(y2 - y1));
     }
 
@@ -14,7 +15,7 @@ public class Space {
         return calculateEuclideanDistance(x1, y1, x2, y2);
     }
 
-    private static double sqr(double a) {
+    private static double sqr(final double a) {
         return Math.pow(a, 2.0);
     }
 }
