@@ -11,7 +11,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 public class SensorTest {
 
@@ -34,5 +33,13 @@ public class SensorTest {
             assertThat(sensor.check(), is(true));
         }
     }
-    
+
+    @Test
+    public void checkLossBySensor() {
+        for (final Medic medic: medics) {
+            final SensorStub sensor = new SensorStub(attractor, medic, 3.0);
+            assertThat(sensor.check(), is(false));
+        }
+    }
+
 }
