@@ -5,7 +5,6 @@ import org.junit.Test;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.Attractor;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.SensorStub;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
