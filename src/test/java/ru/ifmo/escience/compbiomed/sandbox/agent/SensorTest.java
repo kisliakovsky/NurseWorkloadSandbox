@@ -27,7 +27,7 @@ public class SensorTest {
     }
 
     @Test
-    public void checkDetectionBySensor() {
+    public void checkDetection() {
         for (final Medic medic: medics) {
             final SensorStub sensor = new SensorStub(attractor, medic, 5.0);
             assertThat(sensor.check(), is(true));
@@ -35,7 +35,7 @@ public class SensorTest {
     }
 
     @Test
-    public void checkLossBySensor() {
+    public void checkLoss() {
         for (final Medic medic: medics) {
             final SensorStub sensor = new SensorStub(attractor, medic, 3.0);
             assertThat(sensor.check(), is(false));
