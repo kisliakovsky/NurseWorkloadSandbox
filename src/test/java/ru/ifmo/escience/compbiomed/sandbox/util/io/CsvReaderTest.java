@@ -1,6 +1,7 @@
 package ru.ifmo.escience.compbiomed.sandbox.util.io;
 
 import org.junit.Test;
+import ru.ifmo.escience.compbiomed.sandbox.data.Event;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,10 +13,12 @@ public class CsvReaderTest {
 
     @Test
     public void checkRead() {
-        final Reader<String[]> scheduleReader = new CsvReader();
-        final Optional<List<String[]>> scheduleOpt = scheduleReader.read("acs_schedule");
+        final Reader<Event> scheduleReader = new CsvReader();
+        final Optional<List<Event>> scheduleOpt = scheduleReader.read("acs_schedule");
         if (scheduleOpt.isPresent()) {
-            assertThat(scheduleOpt.get().size(), is(8));
+            final List<Event> schedule = scheduleOpt.get();
+            assertThat(schedule.size(), is(7));
+            assertThat(schedule.get(0).getName(), is("nurse_0"));
         } else {
             fail();
         }
