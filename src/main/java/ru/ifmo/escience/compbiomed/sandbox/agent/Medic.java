@@ -6,11 +6,11 @@ public class Medic extends Pedestrian {
 
     public Medic(final double x, final double y, final long index) {
         super(x, y);
-        this.id =  this.getClass().getSimpleName().toLowerCase() + "_" + index;
+//        this.id =  this.getClass().getSimpleName().toLowerCase() + "_" + index;
     }
 
-    public String getId() {
-        return id;
+    @Override
+    public String toString() {
+        return this.id;
     }
-
 }
