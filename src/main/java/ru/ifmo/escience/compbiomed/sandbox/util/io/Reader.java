@@ -5,6 +5,6 @@ import java.util.Optional;
 
 public interface Reader<T> {
 
-    public Optional<List<T>> read(final String filePath);
+    Optional<List<T>> read(final String filePath);
 
 }
