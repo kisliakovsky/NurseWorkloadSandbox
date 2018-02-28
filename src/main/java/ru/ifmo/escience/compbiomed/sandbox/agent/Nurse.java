@@ -6,4 +6,8 @@ public class Nurse extends CareParticipant {
         super(x, y, index);
     }
 
+    public Nurse(final long index) {
+        this(0.0, 0.0, index);
+    }
+
 }
