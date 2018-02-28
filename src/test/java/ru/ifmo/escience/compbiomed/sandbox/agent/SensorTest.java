@@ -14,29 +14,29 @@ import static org.junit.Assert.assertThat;
 public class SensorTest {
 
     private Attractor attractor;
-    private List<Medic> medics;
+    private List<CareParticipant> careParticipants;
 
     @Before
     public void setUp() {
         attractor = new Attractor(5.0, 8.0); // attractorPatientRoom06Floor7 in AnyLogic
-        medics = new ArrayList<>();
+        careParticipants = new ArrayList<>();
         for (int i = 0; i < 2; ++i) {
-            medics.add(new Nurse(4.0, 5.0, i));
+            careParticipants.add(new Nurse(4.0, 5.0, i));
         }
     }
 
     @Test
     public void checkDetection() {
-        for (final Medic medic: medics) {
-            final SensorStub sensor = new SensorStub(attractor, medic, 5.0);
+        for (final CareParticipant careParticipant : careParticipants) {
+            final SensorStub sensor = new SensorStub(attractor, careParticipant, 5.0);
             assertThat(sensor.check(), is(true));
         }
     }
 
     @Test
     public void checkLoss() {
-        for (final Medic medic: medics) {
-            final SensorStub sensor = new SensorStub(attractor, medic, 3.0);
+        for (final CareParticipant careParticipant : careParticipants) {
+            final SensorStub sensor = new SensorStub(attractor, careParticipant, 3.0);
             assertThat(sensor.check(), is(false));
         }
     }

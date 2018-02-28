@@ -27,7 +27,7 @@ public class Agent {
 
     public double distanceTo(final Agent other) {
         return Space.calculateEuclideanDistance(
-                new Point(this.x, this.y),
+                new Point(x, y),
                 new Point(other.getX(), other.getY())
         );
     }

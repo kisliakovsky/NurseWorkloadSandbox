@@ -3,7 +3,7 @@ package ru.ifmo.escience.compbiomed.sandbox.sensor;
 import ru.ifmo.escience.compbiomed.sandbox.agent.Agent;
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
 
-public class SensorStub extends Pedestrian {
+public class SensorStub extends Agent implements Pedestrian {
 
     private Agent agent;
     private double detectionRadius;
@@ -15,8 +15,8 @@ public class SensorStub extends Pedestrian {
     }
 
     public boolean check() {
-        final double distance = this.agent.distanceTo(this);
-        return distance < this.detectionRadius;
+        final double distance = agent.distanceTo(this);
+        return distance < detectionRadius;
     }
 
 }

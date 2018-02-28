@@ -5,6 +5,7 @@ import com.opencsv.bean.CsvDate;
 
 import java.util.Date;
 
+@SuppressWarnings("unused")
 public class Event {
 
     @CsvBindByName(column = "datetime", required = true)
