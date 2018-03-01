@@ -2,6 +2,9 @@ package ru.ifmo.escience.compbiomed.sandbox.simulation;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.ifmo.escience.compbiomed.sandbox.agent.Nurse;
+import ru.ifmo.escience.compbiomed.sandbox.block.NurseSource;
+import ru.ifmo.escience.compbiomed.sandbox.block.PedSource;
 
 public class SimulationTest {
 
@@ -9,7 +12,7 @@ public class SimulationTest {
 
     @Before
     public void setUp() {
-        simulation = new Simulation();
+        simulation = new Simulation(1.0);
     }
 
     @Test
@@ -21,4 +24,17 @@ public class SimulationTest {
         simulation.addEvent(new SimpleEvent(11.2));
         simulation.run();
     }
+
+    @Test
+    public void checkSource() {
+        final NurseSource source = new NurseSource();
+        simulation.addEvent(new AbstractEvent(1.1) {
+            @Override
+            public void execute() {
+                source.inject(1);
+            }
+        });
+        simulation.run();
+    }
+
 }

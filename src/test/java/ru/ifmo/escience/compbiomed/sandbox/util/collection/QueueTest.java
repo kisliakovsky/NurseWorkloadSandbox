@@ -32,7 +32,7 @@ public class QueueTest {
         final int size = queue.size();
         for (int i = 0; i < size; ++i) {
             final Event event = queue.poll();
-            assertThat(event.eTime(), closeTo(orderedTimes[i], 0.001));
+            assertThat(event.getTimeSec(), closeTo(orderedTimes[i], 0.001));
         }
     }
 }

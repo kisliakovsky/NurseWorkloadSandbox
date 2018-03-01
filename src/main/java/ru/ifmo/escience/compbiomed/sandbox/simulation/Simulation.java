@@ -3,26 +3,35 @@ package ru.ifmo.escience.compbiomed.sandbox.simulation;
 import ru.ifmo.escience.compbiomed.sandbox.util.collection.Queue;
 
 
-// TODO: Check if Ivanov's eTime means the same.
 public class Simulation {
 
     private Queue<Event> eventQueue = new Queue<>();
-    private double time;
+    private long startTime;
+    private double acceleration;
 
-    public void run(final double finishTime) {
-        System.out.println("Simulation started");
-        while (!eventQueue.isEmpty() && time < finishTime) {
-            final Event nextEvent = eventQueue.poll();
-            if (nextEvent.eTime() <= finishTime) {
-                nextEvent.execute();
-                time = nextEvent.eTime();
-            }
-        }
-        System.out.println("Simulation finished");
+    public Simulation(double acceleration) {
+        this.acceleration = acceleration;
+    }
+
+    public Simulation() {
+        this(1.0);
+    }
+
+    private double time() {
+        return acceleration * (System.nanoTime() - startTime);
     }
 
     public void run() {
-        run(Double.MAX_VALUE);
+        System.out.println("Simulation started");
+        startTime = System.nanoTime();
+        while (!eventQueue.isEmpty()) {
+            final Event nextEvent = eventQueue.poll();
+            while (nextEvent.getTimeNano() > time()) {
+                continue;
+            }
+            nextEvent.execute();
+        }
+        System.out.println("Simulation finished");
     }
 
     public void addEvent(final Event event) {

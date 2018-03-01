@@ -13,6 +13,9 @@ public class Agent {
         this.y = y;
     }
 
+    public void onCreate() {
+    }
+
     public double getX() {
         return x;
     }

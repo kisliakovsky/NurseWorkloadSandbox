@@ -4,6 +4,8 @@ public interface Event {
 
     void execute();
 
-    double eTime();
+    double getTimeSec();
+
+    double getTimeNano();
 
 }

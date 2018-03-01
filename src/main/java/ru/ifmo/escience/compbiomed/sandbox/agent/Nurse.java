@@ -10,4 +10,8 @@ public class Nurse extends CareParticipant {
         this(0.0, 0.0, index);
     }
 
+    @Override
+    public void onCreate() {
+        System.out.println("Hi! I'm " + toString());
+    }
 }

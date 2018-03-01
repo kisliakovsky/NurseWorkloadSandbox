@@ -1,20 +1,14 @@
 package ru.ifmo.escience.compbiomed.sandbox.simulation;
 
-public class SimpleEvent implements Event {
+public class SimpleEvent extends AbstractEvent {
 
-    private double eTime;
-
-    public SimpleEvent(final double eTime) {
-        this.eTime = eTime;
+    public SimpleEvent(final double time) {
+        super(time);
     }
 
     @Override
     public void execute() {
-        System.out.println("Execute the event " + toString() + " at the moment " + eTime);
+        System.out.println("Execute the event " + toString() + " at the moment " + getTimeSec());
     }
 
-    @Override
-    public double eTime() {
-        return eTime;
-    }
 }

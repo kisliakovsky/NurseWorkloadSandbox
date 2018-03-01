@@ -13,12 +13,12 @@ public class Queue<T extends Event> {
             queue.offer(item);
         } else {
             final T last = queue.peekLast();
-            if (item.eTime() >= last.eTime()) {
+            if (item.getTimeSec() >= last.getTimeSec()) {
                 queue.offer(item);
             } else {
                 for (int i = 0; i < queue.size(); ++i) {
                     final T current = queue.get(i);
-                    if (item.eTime() < current.eTime()) {
+                    if (item.getTimeSec() < current.getTimeSec()) {
                         queue.add(i, item);
                         break;
                     }
