@@ -10,11 +10,10 @@ import java.util.List;
 public class PedSource<T extends SimplePedestrian> {
 
     private Class<T> classInstance;
-    private List<T> peds;
+    private List<T> peds = new ArrayList<>();
 
     public PedSource(Class<T> classInstance) {
         this.classInstance = classInstance;
-        this.peds = new ArrayList<>();
     }
 
     public List<T> peds() {
