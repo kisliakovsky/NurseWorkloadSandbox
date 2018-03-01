@@ -18,4 +18,5 @@ public class Space {
     private static double sqr(final double a) {
         return Math.pow(a, 2.0);
     }
+
 }

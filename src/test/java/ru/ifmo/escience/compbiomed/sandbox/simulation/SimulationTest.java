@@ -27,13 +27,9 @@ public class SimulationTest {
 
     @Test
     public void checkSource() {
-        final NurseSource source = new NurseSource();
-        simulation.addEvent(new AbstractEvent(1.1) {
-            @Override
-            public void execute() {
-                source.inject(1);
-            }
-        });
+        final NurseSource source = new NurseSource(simulation);
+        simulation.addBlock(source);
+        source.inject(1);
         simulation.run();
     }
 

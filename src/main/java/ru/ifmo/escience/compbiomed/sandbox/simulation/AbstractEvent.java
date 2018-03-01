@@ -10,6 +10,10 @@ public abstract class AbstractEvent implements Event {
         timeNano = timeSec * 1e9;
     }
 
+    public AbstractEvent() {
+        this(0.0);
+    }
+
     @Override
     public double getTimeSec() {
         return timeSec;

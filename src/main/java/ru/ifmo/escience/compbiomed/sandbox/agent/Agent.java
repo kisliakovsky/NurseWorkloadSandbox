@@ -1,38 +1,12 @@
 package ru.ifmo.escience.compbiomed.sandbox.agent;
 
-import ru.ifmo.escience.compbiomed.sandbox.util.math.Point;
-import ru.ifmo.escience.compbiomed.sandbox.util.math.Space;
+public interface Agent {
 
-public class Agent {
-
-    private double x;
-    private double y;
-
-    public Agent(final double x, final double y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void onCreate() {
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double distanceTo(final double x, final double y) {
-        return Space.calculateEuclideanDistance(new Point(this.x, this.y), new Point(x, y));
-    }
-
-    public double distanceTo(final Agent other) {
-        return Space.calculateEuclideanDistance(
-                new Point(x, y),
-                new Point(other.getX(), other.getY())
-        );
-    }
+    void onCreate();
+    void onStartup();
+    double getX();
+    double getY();
+    double distanceTo(final double x, final double y);
+    double distanceTo(final Agent other);
 
 }

@@ -28,4 +28,10 @@ public class Nurse extends CareParticipant {
     public void onCreate() {
         System.out.println("Hi! I'm " + toString());
     }
+
+    @Override
+    public void onStartup() {
+        System.out.println("I (" + toString() + ") am going to start!");
+    }
+
 }

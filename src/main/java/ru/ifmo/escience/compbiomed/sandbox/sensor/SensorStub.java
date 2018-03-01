@@ -2,8 +2,9 @@ package ru.ifmo.escience.compbiomed.sandbox.sensor;
 
 import ru.ifmo.escience.compbiomed.sandbox.agent.Agent;
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
+import ru.ifmo.escience.compbiomed.sandbox.agent.SimplePedestrian;
 
-public class SensorStub extends Agent implements Pedestrian {
+public class SensorStub extends SimplePedestrian {
 
     private Agent agent;
     private double detectionRadius;

@@ -17,4 +17,5 @@ public class Attractor {
     public double getY() {
         return y;
     }
+
 }
