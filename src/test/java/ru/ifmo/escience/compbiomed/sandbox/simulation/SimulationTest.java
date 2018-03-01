@@ -12,7 +12,7 @@ public class SimulationTest {
 
     @Before
     public void setUp() {
-        simulation = new Simulation(1.0);
+        simulation = new Simulation(25.0);
     }
 
     @Test
