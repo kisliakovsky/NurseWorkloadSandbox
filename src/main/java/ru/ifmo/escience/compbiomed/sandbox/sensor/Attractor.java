@@ -1,21 +1,21 @@
 package ru.ifmo.escience.compbiomed.sandbox.sensor;
 
+import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
+
 public class Attractor {
 
-    private double x;
-    private double y;
+    private Location location;
 
     public Attractor(double x, double y) {
-        this.x = x;
-        this.y = y;
+        location = new Location(x, y);
     }
 
     public double getX() {
-        return x;
+        return location.getPoint().getX();
     }
 
     public double getY() {
-        return y;
+        return location.getPoint().getX();
     }
 
 }

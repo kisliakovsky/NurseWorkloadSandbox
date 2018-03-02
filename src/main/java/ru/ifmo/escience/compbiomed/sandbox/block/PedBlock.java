@@ -6,6 +6,4 @@ import java.util.List;
 
 public interface PedBlock<T extends Pedestrian> {
 
-    List<T> peds();
-
 }

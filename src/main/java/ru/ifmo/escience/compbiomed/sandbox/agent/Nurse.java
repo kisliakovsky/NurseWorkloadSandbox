@@ -16,22 +16,11 @@ public class Nurse extends CareParticipant {
     private List<Integer> doors = new LinkedList<>();
     private List<Attractor> patientRooms = new ArrayList<>();
 
+    public Nurse(final long index) {
+        super(index);
+    }
+
     public Nurse(final double x, final double y, final long index) {
         super(x, y, index);
     }
-
-    public Nurse(final long index) {
-        this(0.0, 0.0, index);
-    }
-
-    @Override
-    public void onCreate() {
-        System.out.println("Hi! I'm " + toString());
-    }
-
-    @Override
-    public void onStartup() {
-        System.out.println("I (" + toString() + ") am going to start!");
-    }
-
 }

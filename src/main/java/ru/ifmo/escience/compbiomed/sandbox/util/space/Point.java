@@ -1,4 +1,4 @@
-package ru.ifmo.escience.compbiomed.sandbox.util.math;
+package ru.ifmo.escience.compbiomed.sandbox.util.space;
 
 public class Point {
 

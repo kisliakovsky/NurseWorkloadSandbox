@@ -1,7 +1,8 @@
 package ru.ifmo.escience.compbiomed.sandbox.simulation;
 
+import ru.ifmo.escience.compbiomed.sandbox.agent.Agent;
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
-import ru.ifmo.escience.compbiomed.sandbox.block.PedBlock;
+import ru.ifmo.escience.compbiomed.sandbox.block.PedSource;
 import ru.ifmo.escience.compbiomed.sandbox.util.collection.Queue;
 import ru.ifmo.escience.compbiomed.sandbox.util.function.Action;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class Simulation {
 
-    private List<PedBlock<? extends Pedestrian>> blocks = new LinkedList<>();
+    private List<PedSource<? extends Pedestrian>> sources = new LinkedList<>();
     private Queue<Event> initQueue = new Queue<>();
     private Queue<Event> eventQueue = new Queue<>();
     private long startTime;
@@ -39,11 +40,7 @@ public class Simulation {
     @SuppressWarnings("UnnecessaryContinue")
     public void run() {
         runInit();
-        for (final PedBlock<? extends Pedestrian> block: blocks) {
-            for (final Pedestrian ped: block.peds()) {
-                ped.onStartup();
-            }
-        }
+        sources.forEach(source -> source.peds().forEach((Agent::onStartup)));
         System.out.println("Simulation started");
         startTime = System.nanoTime();
         while (!eventQueue.isEmpty()) {
@@ -73,8 +70,8 @@ public class Simulation {
         });
     }
 
-    public void addBlock(final PedBlock<? extends Pedestrian> block) {
-        blocks.add(block);
+    public void addSource(final PedSource<? extends Pedestrian> source) {
+        sources.add(source);
     }
 
 }
