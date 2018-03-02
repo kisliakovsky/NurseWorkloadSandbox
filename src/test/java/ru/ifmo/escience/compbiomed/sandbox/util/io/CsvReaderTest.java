@@ -13,8 +13,8 @@ public class CsvReaderTest {
 
     @Test
     public void checkRead() {
-        final Reader<Event> scheduleReader = new CsvReader();
-        final Optional<List<Event>> scheduleOpt = scheduleReader.read("acs_schedule");
+        final Reader<Event> scheduleReader = Reader.getCsvReader();
+        final Optional<List<Event>> scheduleOpt = Optional.ofNullable(scheduleReader.read("acs_schedule"));
         if (scheduleOpt.isPresent()) {
             final List<Event> schedule = scheduleOpt.get();
             assertThat(schedule.size(), is(7));

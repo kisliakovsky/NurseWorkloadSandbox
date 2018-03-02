@@ -11,11 +11,20 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 
-public class CsvReader implements Reader<Event> {
+class CsvReader implements Reader<Event> {
+
+    private static Reader<Event> instance;
+
+    static synchronized Reader<Event> getInstance() {
+        if (instance == null) {
+            instance = new CsvReader();
+        }
+        return instance;
+    }
 
     private static final String EXTENSION = ".csv";
 
-    public Optional<List<Event>> read(final String filePath) {
+    public List<Event> read(final String filePath) {
         List<Event> schedule = null;
         try {
             final URL fileUrl = getClass().getClassLoader().getResource(filePath + EXTENSION);
@@ -31,7 +40,7 @@ public class CsvReader implements Reader<Event> {
             System.err.println("Cannot read the file " + filePath);
         }
 
-        return Optional.ofNullable(schedule);
+        return schedule;
     }
 
 }
