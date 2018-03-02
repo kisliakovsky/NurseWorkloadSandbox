@@ -1,6 +1,5 @@
 package ru.ifmo.escience.compbiomed.sandbox.agent;
 
-import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
 public interface Pedestrian extends Agent {
 

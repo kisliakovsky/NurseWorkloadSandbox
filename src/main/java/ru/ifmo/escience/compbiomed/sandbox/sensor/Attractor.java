@@ -15,7 +15,7 @@ public class Attractor {
     }
 
     public double getY() {
-        return location.getPoint().getX();
+        return location.getPoint().getY();
     }
 
 }

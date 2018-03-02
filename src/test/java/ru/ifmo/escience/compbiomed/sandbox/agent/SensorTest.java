@@ -27,7 +27,7 @@ public class SensorTest {
 
     @Test
     public void checkDetection() {
-        for (final CareParticipant careParticipant : careParticipants) {
+        for (final CareParticipant careParticipant: careParticipants) {
             final SensorStub sensor = new SensorStub(attractor, careParticipant, 5.0);
             assertThat(sensor.check(), is(true));
         }
@@ -35,7 +35,7 @@ public class SensorTest {
 
     @Test
     public void checkLoss() {
-        for (final CareParticipant careParticipant : careParticipants) {
+        for (final CareParticipant careParticipant: careParticipants) {
             final SensorStub sensor = new SensorStub(attractor, careParticipant, 3.0);
             assertThat(sensor.check(), is(false));
         }
