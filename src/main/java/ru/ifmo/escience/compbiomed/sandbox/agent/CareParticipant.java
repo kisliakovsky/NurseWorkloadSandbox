@@ -11,10 +11,6 @@ public class CareParticipant extends DestinedPedestrian {
         id = this.getClass().getSimpleName().toLowerCase() + "_" + index;
     }
 
-    public CareParticipant(final long index) {
-        this(Location.byCoordinates(0.0, 0.0), Location.byCoordinates(10.0, 10.0), index);
-    }
-
     @Override
     public String toString() {
         return id;

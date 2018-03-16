@@ -19,12 +19,9 @@ public class Nurse extends CareParticipant {
     private List<Integer> doors;
     private List<Attractor> patientRooms;
 
-    public Nurse(final long index) {
-        this(0.0, 0.0, index);
-    }
 
-    public Nurse(final double x, final double y, final long index) {
-        super(Location.byCoordinates(x, y), Location.byCoordinates(x, y), index);
+    public Nurse(final Location location, final Location destination, final long index) {
+        super(location, destination, index);
     }
 
     @Override

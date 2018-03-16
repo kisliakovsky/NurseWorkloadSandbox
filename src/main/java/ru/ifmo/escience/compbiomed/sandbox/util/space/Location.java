@@ -11,7 +11,7 @@ public class Location {
     public static Location byPoint(final Point point) {
         final double x = point.getX();
         final double y = point.getY();
-        if (x < 0.0 || x > 10.0 || y < 0.0 || y > 10.0) {
+        if (x < 0.0 || x > 100.0 || y < 0.0 || y > 100.0) {
             throw new IllegalArgumentException();
         }
         return new Location(point);

@@ -21,4 +21,6 @@ public interface PedSource<T extends Pedestrian> extends PedBlock<T> {
 
     void inject(final int num);
 
+    Simulation getSimulation();
+
 }
