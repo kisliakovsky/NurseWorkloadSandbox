@@ -2,3 +2,6 @@
 .gradle/
 out/
 build/
+NurseWorkloadSandbox.ipr
+NurseWorkloadSandbox.iws
+*.iml
