@@ -12,7 +12,7 @@ public class CareParticipant extends DestinedPedestrian {
     }
 
     public CareParticipant(final long index) {
-        this(new Location(0.0, 0.0), new Location(10.0, 10.0), index);
+        this(Location.byCoordinates(0.0, 0.0), Location.byCoordinates(10.0, 10.0), index);
     }
 
     @Override

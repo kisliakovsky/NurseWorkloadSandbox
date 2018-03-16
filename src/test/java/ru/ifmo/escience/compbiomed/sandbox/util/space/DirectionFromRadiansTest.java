@@ -6,7 +6,7 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
-import static java.lang.Math.*;
+import static java.lang.Math.PI;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;

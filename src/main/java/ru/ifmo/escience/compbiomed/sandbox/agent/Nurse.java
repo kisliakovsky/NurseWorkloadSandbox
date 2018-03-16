@@ -24,7 +24,7 @@ public class Nurse extends CareParticipant {
     }
 
     public Nurse(final double x, final double y, final long index) {
-        super(new Location(x, y), new Location(x, y), index);
+        super(Location.byCoordinates(x, y), Location.byCoordinates(x, y), index);
     }
 
     @Override

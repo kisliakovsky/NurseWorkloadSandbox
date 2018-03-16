@@ -4,14 +4,21 @@ public class Location {
 
     private Point point;
 
-    public Location(final Point point) {
+    private Location(final Point point) {
         this.point = point;
     }
 
-    public Location(final double x, final double y) {
-        this(new Point(x, y));
-        if (x < 0.0 || x > 10.0 || y < 0.0 || y > 10.0)
+    public static Location byPoint(final Point point) {
+        final double x = point.getX();
+        final double y = point.getY();
+        if (x < 0.0 || x > 10.0 || y < 0.0 || y > 10.0) {
             throw new IllegalArgumentException();
+        }
+        return new Location(point);
+    }
+
+    public static Location byCoordinates(final double x, final double y) {
+        return byPoint(new Point(x, y));
     }
 
     public Point getPoint() {

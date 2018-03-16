@@ -7,7 +7,7 @@ public class Attractor {
     private Location location;
 
     public Attractor(double x, double y) {
-        location = new Location(x, y);
+        location = Location.byCoordinates(x, y);
     }
 
     public double getX() {
