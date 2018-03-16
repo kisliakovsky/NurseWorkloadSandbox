@@ -3,7 +3,7 @@ package ru.ifmo.escience.compbiomed.sandbox.agent;
 import org.junit.Before;
 import org.junit.Test;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.Attractor;
-import ru.ifmo.escience.compbiomed.sandbox.sensor.SimpliestSensorStub;
+import ru.ifmo.escience.compbiomed.sandbox.sensor.SimplestSensorStub;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class SensorTest {
     @Test
     public void checkDetection() {
         for (final CareParticipant careParticipant: careParticipants) {
-            final SimpliestSensorStub sensor = new SimpliestSensorStub(attractor, careParticipant, 5.0);
+            final SimplestSensorStub sensor = new SimplestSensorStub(attractor, careParticipant, 5.0);
             assertThat(sensor.check(), is(true));
         }
     }
@@ -41,7 +41,7 @@ public class SensorTest {
     @Test
     public void checkLoss() {
         for (final CareParticipant careParticipant: careParticipants) {
-            final SimpliestSensorStub sensor = new SimpliestSensorStub(attractor, careParticipant, 3.0);
+            final SimplestSensorStub sensor = new SimplestSensorStub(attractor, careParticipant, 3.0);
             assertThat(sensor.check(), is(false));
         }
     }
