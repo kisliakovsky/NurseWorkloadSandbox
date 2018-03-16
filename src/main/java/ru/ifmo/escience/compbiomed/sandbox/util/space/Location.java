@@ -10,6 +10,8 @@ public class Location {
 
     public Location(final double x, final double y) {
         this(new Point(x, y));
+        if (x < 0.0 || x > 10.0 || y < 0.0 || y > 10.0)
+            throw new IllegalArgumentException();
     }
 
     public Point getPoint() {

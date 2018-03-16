@@ -2,12 +2,12 @@ package ru.ifmo.escience.compbiomed.sandbox.agent;
 
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
-public class SimplePedestrian implements Pedestrian {
+public class StaticPedestrian implements Pedestrian {
 
     private Location location;
 
-    public SimplePedestrian(double x, double y) {
-        location = new Location(x, y);
+    public StaticPedestrian(final Location location) {
+        this.location = location;
     }
 
     @Override

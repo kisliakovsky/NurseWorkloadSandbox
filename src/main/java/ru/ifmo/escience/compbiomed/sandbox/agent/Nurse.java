@@ -4,6 +4,7 @@ import ru.ifmo.escience.compbiomed.sandbox.Experiment;
 import ru.ifmo.escience.compbiomed.sandbox.data.Event;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.Attractor;
 import ru.ifmo.escience.compbiomed.sandbox.util.io.Reader;
+import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public class Nurse extends CareParticipant {
     }
 
     public Nurse(final double x, final double y, final long index) {
-        super(x, y, index);
+        super(new Location(x, y), new Location(x, y), index);
     }
 
     @Override

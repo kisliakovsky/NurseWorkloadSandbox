@@ -1,16 +1,18 @@
 package ru.ifmo.escience.compbiomed.sandbox.agent;
 
-public class CareParticipant extends SimplePedestrian {
+import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
+
+public class CareParticipant extends DestinedPedestrian {
 
     private String id;
 
-    public CareParticipant(final double x, final double y, final long index) {
-        super(x, y);
+    public CareParticipant(final Location location, final Location destination, final long index) {
+        super(location, destination);
         id = this.getClass().getSimpleName().toLowerCase() + "_" + index;
     }
 
     public CareParticipant(final long index) {
-        this(0.0, 0.0, index);
+        this(new Location(0.0, 0.0), new Location(10.0, 10.0), index);
     }
 
     @Override
