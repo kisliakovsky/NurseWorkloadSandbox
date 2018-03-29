@@ -1,6 +1,7 @@
 package ru.ifmo.escience.compbiomed.sandbox.block;
 
 import ru.ifmo.escience.compbiomed.sandbox.agent.Nurse;
+import ru.ifmo.escience.compbiomed.sandbox.simulation.AbstractEvent;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
@@ -25,6 +26,14 @@ public class NurseSourceStub extends AbstractPedSource<Nurse> {
                 );
                 nurse.onCreate();
                 nurses.add(nurse);
+                if (!nurse.isArrived()) {
+                    simulation.addEvent(new AbstractEvent(1e-3) {
+                        @Override
+                        public void execute() {
+
+                        }
+                    });
+                }
             }
         });
     }

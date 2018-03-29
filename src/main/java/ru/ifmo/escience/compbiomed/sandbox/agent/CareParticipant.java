@@ -2,7 +2,7 @@ package ru.ifmo.escience.compbiomed.sandbox.agent;
 
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
-public class CareParticipant extends DestinedPedestrian {
+public class CareParticipant extends TargetedPedestrian {
 
     private String id;
 

@@ -27,6 +27,14 @@ public class Location {
         return point;
     }
 
+    public double getX() {
+        return point.getX();
+    }
+
+    public double getY() {
+        return point.getY();
+    }
+
     public double distanceTo(final Location other) {
         return Space.calculateEuclideanDistance(this.point, other.point);
     }
