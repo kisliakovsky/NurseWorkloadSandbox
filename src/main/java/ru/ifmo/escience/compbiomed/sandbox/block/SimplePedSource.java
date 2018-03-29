@@ -2,6 +2,7 @@ package ru.ifmo.escience.compbiomed.sandbox.block;
 
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
+import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
 import java.util.ArrayList;
 import java.util.List;

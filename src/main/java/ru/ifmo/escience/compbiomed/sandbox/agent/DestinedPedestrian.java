@@ -17,4 +17,8 @@ public class DestinedPedestrian extends StaticPedestrian {
         this(location, destination, 4.0);
     }
 
+    public final void updateDestination(final Location destination) {
+        this.destination = destination;
+    }
+
 }

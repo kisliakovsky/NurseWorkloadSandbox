@@ -19,9 +19,16 @@ public class Nurse extends CareParticipant {
     private List<Integer> doors;
     private List<Attractor> patientRooms;
 
-
     public Nurse(final Location location, final Location destination, final long index) {
         super(location, destination, index);
+    }
+
+    public Nurse(final Location location, final long index) {
+        super(location, index);
+    }
+
+    public Nurse(final long index) {
+        super(index);
     }
 
     @Override

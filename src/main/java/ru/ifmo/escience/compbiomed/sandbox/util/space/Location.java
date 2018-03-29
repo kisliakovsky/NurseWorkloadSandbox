@@ -21,6 +21,8 @@ public class Location {
         return byPoint(new Point(x, y));
     }
 
+    public static Location defaultLocation() { return byCoordinates(0.0, 0.0); }
+
     public Point getPoint() {
         return point;
     }

@@ -37,7 +37,7 @@ public class SimulationTest {
             final PedSource<? extends CareParticipant> source = sourceFactory.apply(simulation);
             simulation.addSource(source);
             return source;
-        }).forEach((source) -> source.inject(1));
+        }).forEach(source -> source.inject(1));
         simulation.run();
     }
 

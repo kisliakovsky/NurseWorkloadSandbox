@@ -10,6 +10,8 @@ public class StaticPedestrian implements Pedestrian {
         this.location = location;
     }
 
+    public StaticPedestrian() { this.location = Location.byCoordinates(0.0, 0.0); }
+
     @Override
     public double getX() {
         return location.getPoint().getX();

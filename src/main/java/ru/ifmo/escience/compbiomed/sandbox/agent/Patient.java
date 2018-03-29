@@ -8,4 +8,12 @@ public class Patient extends CareParticipant {
         super(location, destination, index);
     }
 
+    public Patient(final Location location, final long index) {
+        super(location, index);
+    }
+
+    public Patient(final long index) {
+        super(index);
+    }
+
 }
