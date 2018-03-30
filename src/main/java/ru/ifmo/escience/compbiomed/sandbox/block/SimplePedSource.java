@@ -2,9 +2,7 @@ package ru.ifmo.escience.compbiomed.sandbox.block;
 
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
-import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
-import java.util.ArrayList;
 import java.util.List;
 
 class SimplePedSource<T extends Pedestrian> extends AbstractPedSource<T> {
@@ -20,7 +18,7 @@ class SimplePedSource<T extends Pedestrian> extends AbstractPedSource<T> {
     public void inject(final int num) {
         final Simulation simulation = getSimulation();
         final List<T> peds = peds();
-        simulation.addFirst(() -> {
+        simulation.addInitEvent(() -> {
             try {
                 for (int i = 0; i < num; ++i) {
                     final T ped = classInstance.getConstructor(long.class).newInstance(i);

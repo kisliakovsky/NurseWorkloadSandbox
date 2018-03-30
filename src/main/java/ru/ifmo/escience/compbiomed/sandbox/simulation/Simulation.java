@@ -13,10 +13,13 @@ import java.util.List;
 public class Simulation {
 
     private List<PedSource<? extends Pedestrian>> sources = new LinkedList<>();
+    private List<? super Pedestrian> peds = new LinkedList<>();
     private Queue<Event> initQueue = new Queue<>();
     private Queue<Event> eventQueue = new Queue<>();
     private long startTime;
     private double acceleration;
+    private boolean finished = false;
+
 
     public Simulation(double acceleration) {
         this.acceleration = acceleration;
@@ -26,7 +29,7 @@ public class Simulation {
         this(1.0);
     }
 
-    public double getSimulationTime() {
+    public double getTime() {
         double time = 0.0;
         if (startTime != 0L) {
             time = acceleration * (System.nanoTime() - startTime);
@@ -44,16 +47,17 @@ public class Simulation {
     @SuppressWarnings("UnnecessaryContinue")
     public void run() {
         runInit();
-        sources.forEach(source -> source.peds().forEach((Agent::onStartup)));
+        sources.forEach(source -> source.peds().forEach(Agent::onStartup));
         System.out.println("Simulation started");
         startTime = System.nanoTime();
         while (!eventQueue.isEmpty()) {
             final Event nextEvent = eventQueue.poll();
-            while (nextEvent.getTimeNano() > getSimulationTime()) {
+            while (nextEvent.getTimeNano() > getTime()) {
                 continue;
             }
             nextEvent.execute();
         }
+        finished = true;
         System.out.println("Simulation finished");
     }
 
@@ -61,12 +65,8 @@ public class Simulation {
         eventQueue.offer(event);
     }
 
-    private void addInitEvent(final Event event) {
-        initQueue.offer(event);
-    }
-
-    public void addFirst(final Action action) {
-        addInitEvent(new AbstractEvent() {
+    public void addInitEvent(final Action action) {
+        initQueue.offer(new AbstractEvent() {
             @Override
             public void execute() {
                 action.perform();
@@ -76,6 +76,14 @@ public class Simulation {
 
     public void addSource(final PedSource<? extends Pedestrian> source) {
         sources.add(source);
+        peds.addAll(source.peds());
     }
 
+    public List<? super Pedestrian> getPeds() {
+        return peds;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
 }

@@ -15,7 +15,7 @@ public class NurseSourceStub extends AbstractPedSource<Nurse> {
 
     private static void moveNurse(final Simulation simulation, final Nurse nurse) {
         final double estimatedTime = nurse.getDisplacement() / nurse.getSpeed();
-        final long numberOfSteps =  (long) Math.ceil(estimatedTime / 1e-3);
+        final long numberOfSteps = (long) Math.ceil(estimatedTime / 1e-3);
         for (int i = 0; i < numberOfSteps; ++i) {
             if (!nurse.isArrived()) {
                 simulation.addEvent(new AbstractEvent(i * 1e-3) {
@@ -34,7 +34,7 @@ public class NurseSourceStub extends AbstractPedSource<Nurse> {
     public void inject(int num) {
         final Simulation simulation = getSimulation();
         final List<Nurse> nurses = peds();
-        simulation.addFirst(() -> {
+        simulation.addInitEvent(() -> {
             for (int i = 0; i < num; ++i) {
                 final Nurse nurse = new Nurse(
                         Location.byCoordinates(20.0, 20.0),
