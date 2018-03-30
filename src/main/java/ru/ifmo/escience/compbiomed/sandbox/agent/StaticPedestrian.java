@@ -32,4 +32,8 @@ public class StaticPedestrian implements Pedestrian {
         return location.distanceTo(Location.byCoordinates(other.getX(), other.getY()));
     }
 
+    public void updateLocation(final Location location) {
+        this.location = location;
+    }
+
 }

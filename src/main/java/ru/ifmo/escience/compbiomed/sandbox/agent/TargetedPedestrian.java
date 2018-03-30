@@ -71,13 +71,13 @@ public class TargetedPedestrian extends StaticPedestrian {
         this.target = target;
     }
 
-    public void updateLocation(final double time) {
+    public void move(final double time) {
         final Direction direction = calculateDirection();
         if (direction != null) {
             final double alpha = direction.getValue();
             final double delta_x = speed * Math.cos(alpha);
             final double delta_y = speed * Math.sin(alpha);
-            // TODO: Make the location update
+            updateLocation(Location.byCoordinates(getX() + delta_x, getY() + delta_y));
         }
     }
 
