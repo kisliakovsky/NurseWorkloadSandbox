@@ -39,4 +39,8 @@ public class Location {
         return Space.calculateEuclideanDistance(this.point, other.point);
     }
 
+    @Override
+    public String toString() {
+        return point.toString();
+    }
 }

@@ -2,6 +2,7 @@ package ru.ifmo.escience.compbiomed.sandbox.agent;
 
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Direction;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
+import ru.ifmo.escience.compbiomed.sandbox.util.space.Space;
 
 public class TargetedPedestrian extends StaticPedestrian {
 
@@ -27,11 +28,7 @@ public class TargetedPedestrian extends StaticPedestrian {
     }
 
     public final boolean isArrived() {
-        final double deltaX = getTargetX() - getX();
-        final double deltaY = getTargetY() - getY();
-        final int res1 = Double.compare(deltaX, 0.0);
-        final int res2 = Double.compare(deltaY, 0.0);
-        return (res1 + res2) == 0;
+        return Double.compare(getDisplacement(), 0.0) == 0;
     }
 
     private Direction calculateDirection() {
@@ -54,9 +51,9 @@ public class TargetedPedestrian extends StaticPedestrian {
             } else {
                 final double alpha = Math.atan(deltaX / deltaY);
                 if (Double.compare(deltaX, 0.0) > 0) {
-                    direction = Direction.fromDegrees(alpha);
+                    direction = Direction.fromRadians(alpha);
                 } else {
-                    direction = Direction.fromDegrees(alpha + 180);
+                    direction = Direction.fromRadians(alpha + Math.PI);
                 }
             }
         }
@@ -67,6 +64,10 @@ public class TargetedPedestrian extends StaticPedestrian {
         return speed;
     }
 
+    public double getDisplacement() {
+        return Space.calculateEuclideanDistance(getX(), getY(), getTargetX(), getTargetY());
+    }
+
     public final void updateTarget(final Location target) {
         this.target = target;
     }
@@ -75,8 +76,8 @@ public class TargetedPedestrian extends StaticPedestrian {
         final Direction direction = calculateDirection();
         if (direction != null) {
             final double alpha = direction.getValue();
-            final double delta_x = speed * Math.cos(alpha);
-            final double delta_y = speed * Math.sin(alpha);
+            final double delta_x = speed * Math.cos(alpha) * time;
+            final double delta_y = speed * Math.sin(alpha) * time;
             updateLocation(Location.byCoordinates(getX() + delta_x, getY() + delta_y));
         }
     }

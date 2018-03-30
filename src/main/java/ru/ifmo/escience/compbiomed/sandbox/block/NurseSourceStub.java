@@ -13,6 +13,23 @@ public class NurseSourceStub extends AbstractPedSource<Nurse> {
         super(simulation);
     }
 
+    private static void moveNurse(final Simulation simulation, final Nurse nurse) {
+        final double estimatedTime = nurse.getDisplacement() / nurse.getSpeed();
+        final long numberOfSteps =  (long) Math.ceil(estimatedTime / 1e-3);
+        for (int i = 0; i < numberOfSteps; ++i) {
+            if (!nurse.isArrived()) {
+                simulation.addEvent(new AbstractEvent(i * 1e-3) {
+                    @Override
+                    public void execute() {
+                        nurse.move(1e-3);
+                    }
+                });
+            } else {
+                break;
+            }
+        }
+    }
+
     @Override
     public void inject(int num) {
         final Simulation simulation = getSimulation();
@@ -26,14 +43,7 @@ public class NurseSourceStub extends AbstractPedSource<Nurse> {
                 );
                 nurse.onCreate();
                 nurses.add(nurse);
-                if (!nurse.isArrived()) {
-                    simulation.addEvent(new AbstractEvent(1e-3) {
-                        @Override
-                        public void execute() {
-
-                        }
-                    });
-                }
+                moveNurse(simulation, nurse);
             }
         });
     }

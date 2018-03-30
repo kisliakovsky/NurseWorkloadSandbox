@@ -26,8 +26,12 @@ public class Simulation {
         this(1.0);
     }
 
-    private double time() {
-        return acceleration * (System.nanoTime() - startTime);
+    public double getSimulationTime() {
+        double time = 0.0;
+        if (startTime != 0L) {
+            time = acceleration * (System.nanoTime() - startTime);
+        }
+        return time;
     }
 
     private void runInit() {
@@ -45,7 +49,7 @@ public class Simulation {
         startTime = System.nanoTime();
         while (!eventQueue.isEmpty()) {
             final Event nextEvent = eventQueue.poll();
-            while (nextEvent.getTimeNano() > time()) {
+            while (nextEvent.getTimeNano() > getSimulationTime()) {
                 continue;
             }
             nextEvent.execute();

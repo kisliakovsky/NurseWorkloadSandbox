@@ -6,9 +6,10 @@ import ru.ifmo.escience.compbiomed.sandbox.agent.CareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.block.NurseSourceStub;
 import ru.ifmo.escience.compbiomed.sandbox.block.PedSource;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
 
 public class PedSimulationTest {
 
@@ -21,14 +22,14 @@ public class PedSimulationTest {
 
     @Test
     public void checkPedestrianEvents() {
-        final List<Function<Simulation, PedSource<? extends CareParticipant>>> sourceFactories = new ArrayList<>();
-        sourceFactories.add(NurseSourceStub::new);
-        sourceFactories.stream().map((sourceFactory) -> {
-            final PedSource<? extends CareParticipant> source = sourceFactory.apply(simulation);
-            simulation.addSource(source);
-            return source;
-        }).forEach(source -> source.inject(1));
+        final PedSource<? extends CareParticipant> source = new NurseSourceStub(simulation);
+        simulation.addSource(source);
+        source.inject(1);
         simulation.run();
+        final List<? extends CareParticipant> peds = source.peds();
+        final CareParticipant careParticipant = peds.get(0);
+        assertThat(careParticipant.getX(), closeTo(90.0, 1e-3));
+        assertThat(careParticipant.getY(), closeTo(90.0, 1e-3));
     }
 
 }
