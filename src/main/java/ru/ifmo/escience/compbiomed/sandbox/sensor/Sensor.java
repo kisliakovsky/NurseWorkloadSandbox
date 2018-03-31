@@ -1,7 +1,9 @@
 package ru.ifmo.escience.compbiomed.sandbox.sensor;
 
+import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
+
 public interface Sensor {
 
-    boolean check();
+    boolean check(final Pedestrian ped);
 
 }

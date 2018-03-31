@@ -17,6 +17,7 @@ public class Simulation {
     private Queue<Event> initQueue = new Queue<>();
     private Queue<Event> eventQueue = new Queue<>();
     private long startTime;
+    private long finishTime;
     private double acceleration;
     private boolean finished = false;
 
@@ -58,6 +59,7 @@ public class Simulation {
             nextEvent.execute();
         }
         finished = true;
+        finishTime = System.nanoTime();
         System.out.println("Simulation finished");
     }
 

@@ -1,13 +1,14 @@
 package ru.ifmo.escience.compbiomed.sandbox.block;
 
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
+import ru.ifmo.escience.compbiomed.sandbox.agent.TargetedPedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.BasicSensorStub;
-import ru.ifmo.escience.compbiomed.sandbox.sensor.Sensor;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.AbstractEvent;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
 
@@ -15,19 +16,21 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
         super(simulation);
     }
 
-    private static void makePoll(final Simulation simulation, final BasicSensorStub sensor) {
-        final double[] timeAccumulator = {0.0};
-        simulation.addEvent(new AbstractEvent(timeAccumulator[0]) {
+    private static void makePoll(final Simulation simulation,
+                                 final BasicSensorStub sensor,
+                                 final double time) {
+        simulation.addEvent(new AbstractEvent(time) {
             @Override
             public void execute() {
                 final List<? super Pedestrian> peds = simulation.getPeds();
-                timeAccumulator[0] += 1e-3;
-                simulation.addEvent(new AbstractEvent(timeAccumulator[0]) {
-                    @Override
-                    public void execute() {
-                        // TODO: Complete the sensor events' injection
+                for (final Object ped: peds) {
+                    if (ped instanceof TargetedPedestrian) {
+                        if (sensor.check((Pedestrian) ped)) {
+                            System.out.println("Detected " + ped.toString());
+                        }
                     }
-                });
+                }
+                makePoll(simulation, sensor, time + 1e-3);
             }});
     }
 
