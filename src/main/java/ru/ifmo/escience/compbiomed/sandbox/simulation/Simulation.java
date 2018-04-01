@@ -78,7 +78,13 @@ public class Simulation {
 
     public void addSource(final PedSource<? extends Pedestrian> source) {
         sources.add(source);
-        peds.addAll(source.peds());
+    }
+
+    public void updatePeds() {
+        peds = new LinkedList<>();
+        for (final PedSource<? extends Pedestrian> pedSource: sources) {
+            peds.addAll(pedSource.peds());
+        }
     }
 
     public List<? super Pedestrian> getPeds() {

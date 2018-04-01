@@ -8,7 +8,6 @@ import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
 
@@ -40,9 +39,12 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
         final List<BasicSensorStub> sensors = peds();
         simulation.addInitEvent(() -> {
             for (int i = 0; i < num; ++i) {
-                final BasicSensorStub sensor = new BasicSensorStub(Location.byCoordinates(40.0, 50.0), i);
+                final BasicSensorStub sensor = new BasicSensorStub(
+                        Location.byCoordinates(40.0, 50.0), i
+                );
                 sensor.onCreate();
                 sensors.add(sensor);
+                makePoll(simulation, sensor, simulation.getTime());
             }
         });
     }
