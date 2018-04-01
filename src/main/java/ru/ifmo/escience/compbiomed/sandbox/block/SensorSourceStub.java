@@ -11,8 +11,12 @@ import java.util.List;
 
 public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
 
-    public SensorSourceStub(final Simulation simulation) {
+    private final List<Location> locations;
+
+    public SensorSourceStub(final Simulation simulation,
+                            final List<Location> locations) {
         super(simulation);
+        this.locations = locations;
     }
 
     private static void makePoll(final Simulation simulation,
@@ -25,7 +29,7 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
                 for (final Object ped: peds) {
                     if (ped instanceof TargetedPedestrian) {
                         if (sensor.check((Pedestrian) ped)) {
-                            System.out.println("Detected " + ped.toString());
+                            System.out.println("Detected " + ped.toString() + " by " + sensor.toString());
                         }
                     }
                 }
@@ -34,17 +38,24 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
     }
 
     @Override
-    public void inject(int num) {
+    public void inject(final int num) {
         final Simulation simulation = getSimulation();
         final List<BasicSensorStub> sensors = peds();
         simulation.addInitEvent(() -> {
             for (int i = 0; i < num; ++i) {
-                final BasicSensorStub sensor = new BasicSensorStub(
-                        Location.byCoordinates(40.0, 50.0), i
-                );
-                sensor.onCreate();
-                sensors.add(sensor);
-                makePoll(simulation, sensor, simulation.getTime());
+                if (i < locations.size()) {
+                    final Location location = locations.get(i);
+                    final BasicSensorStub sensor = new BasicSensorStub(
+                            location, i
+                    );
+                    sensor.onCreate();
+                    sensors.add(sensor);
+                    makePoll(simulation, sensor, simulation.getTime());
+                } else {
+                    throw new IllegalArgumentException(
+                            "There are not enough locations"
+                    );
+                }
             }
         });
     }
