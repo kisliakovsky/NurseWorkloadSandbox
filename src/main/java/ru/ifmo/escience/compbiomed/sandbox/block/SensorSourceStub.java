@@ -50,6 +50,7 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
                     );
                     sensor.onCreate();
                     sensors.add(sensor);
+                    simulation.updatePeds();
                     makePoll(simulation, sensor, simulation.getTime());
                 } else {
                     throw new IllegalArgumentException(
