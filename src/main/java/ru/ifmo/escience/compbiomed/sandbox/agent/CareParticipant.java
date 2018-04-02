@@ -34,4 +34,8 @@ public class CareParticipant extends TargetedPedestrian {
         System.out.println("I (" + toString() + ") am going to start!");
     }
 
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
 }

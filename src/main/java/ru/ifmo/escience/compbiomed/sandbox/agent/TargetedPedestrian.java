@@ -81,5 +81,4 @@ public class TargetedPedestrian extends StaticPedestrian {
             updateLocation(Location.byCoordinates(getX() + delta_x, getY() + delta_y));
         }
     }
-
 }

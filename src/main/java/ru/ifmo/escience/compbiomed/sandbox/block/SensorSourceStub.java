@@ -1,16 +1,14 @@
 package ru.ifmo.escience.compbiomed.sandbox.block;
 
+import ru.ifmo.escience.compbiomed.sandbox.agent.CareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
-import ru.ifmo.escience.compbiomed.sandbox.agent.TargetedPedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.BasicSensorStub;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.SensorVector;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.AbstractEvent;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
 
@@ -29,19 +27,21 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
             @Override
             public void execute() {
                 final List<? super Pedestrian> peds = simulation.getPeds();
-                final List<List<TargetedPedestrian>> sensorsData = new LinkedList<>();
-                for (final BasicSensorStub sensor: sensors) {
-                    final List<TargetedPedestrian> sensorData = new LinkedList<>();
-                    for (final Object ped : peds) {
-                        if (ped instanceof TargetedPedestrian) {
+                final Map<CareParticipant, List<BasicSensorStub>> pedsData = new HashMap<>();
+                for (final Object ped : peds) {
+                    if (ped instanceof CareParticipant) {
+                        final List<BasicSensorStub> pedData = new LinkedList<>();
+                        for (final BasicSensorStub sensor: sensors) {
                             if (sensor.check((Pedestrian) ped)) {
-                                sensorData.add((TargetedPedestrian) ped);
+                                pedData.add(sensor);
+                            } else {
+                                pedData.add(null);
                             }
                         }
+                        pedsData.put((CareParticipant) ped, pedData);
                     }
-                    sensorsData.add(sensorData);
                 }
-                System.out.println(new SensorVector(sensorsData));
+                System.out.println(new SensorVector(pedsData));
                 makePoll(simulation, sensors, time + 1e-3);
             }});
     }
