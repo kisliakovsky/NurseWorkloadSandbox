@@ -19,11 +19,17 @@ public class Simulation {
     private long startTime;
     private long finishTime;
     private double acceleration;
+    private double timeout;
     private boolean finished = false;
 
 
-    public Simulation(double acceleration) {
+    public Simulation(final double acceleration, final double timeout) {
         this.acceleration = acceleration;
+        this.timeout = timeout;
+    }
+
+    public Simulation(final double acceleration) {
+        this(acceleration, 0.0);
     }
 
     public Simulation() {
@@ -36,6 +42,11 @@ public class Simulation {
             time = acceleration * (System.nanoTime() - startTime);
         }
         return time;
+    }
+
+    private boolean isTimeoutOver() {
+        final double nanoTimeout = timeout * 1e9;
+        return Double.compare(nanoTimeout, 0.0) != 0 && Double.compare(nanoTimeout, getTime()) < 0;
     }
 
     private void runInit() {
@@ -51,7 +62,7 @@ public class Simulation {
         sources.forEach(source -> source.peds().forEach(Agent::onStartup));
         System.out.println("Simulation started");
         startTime = System.nanoTime();
-        while (!eventQueue.isEmpty()) {
+        while (!eventQueue.isEmpty() && !isTimeoutOver()) {
             final Event nextEvent = eventQueue.poll();
             while (nextEvent.getTimeNano() > getTime()) {
                 continue;
