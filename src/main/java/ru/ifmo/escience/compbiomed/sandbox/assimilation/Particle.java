@@ -14,11 +14,14 @@ public class Particle extends CareParticipant {
 
     private static final double DEFAULT_DISPLACEMENT = 50.0;
 
+    private RealCareParticipant object;
     private double weight;
 
-    private Particle(final Location location, final Location target, final long index, final double weight) {
+    private Particle(final Location location, final Location target, final long index,
+                     final double weight, final RealCareParticipant object) {
         super(location, target, index);
         this.weight = weight;
+        this.object = object;
     }
 
     public double getWeight() {
@@ -29,7 +32,7 @@ public class Particle extends CareParticipant {
         this.weight = weight;
     }
 
-    public static List<Particle> createParticles(final RealCareParticipant careParticipant, final int num) {
+    public static List<Particle> createParticles(final RealCareParticipant object, final int num) {
         final Random xRandom = new Random();
         final Random yRandom = new Random();
         final Random alphaRandom = new Random();
@@ -43,11 +46,14 @@ public class Particle extends CareParticipant {
             final double target_y = y + DEFAULT_DISPLACEMENT * Math.cos(alpha);
             final Location location = Location.byCoordinates(x, y);
             final Location target = Location.byCoordinates(target_x, target_y);
-            final Particle particle = new Particle(location, target, i, weight);
+            final Particle particle = new Particle(location, target, i, weight, object);
             particle.onCreate();
             particles.add(particle);
         }
         return particles;
     }
 
+    public RealCareParticipant getObject() {
+        return object;
+    }
 }

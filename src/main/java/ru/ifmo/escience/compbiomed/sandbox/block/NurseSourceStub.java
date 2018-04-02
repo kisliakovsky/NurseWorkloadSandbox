@@ -31,7 +31,7 @@ public class NurseSourceStub extends AbstractPedSource<Nurse> {
     }
 
     @Override
-    public void inject(int num) {
+    public void inject(final int num) {
         final Simulation simulation = getSimulation();
         final List<Nurse> nurses = peds();
         simulation.addInitEvent(() -> {

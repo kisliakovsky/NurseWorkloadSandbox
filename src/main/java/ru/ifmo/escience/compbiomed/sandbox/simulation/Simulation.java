@@ -2,7 +2,10 @@ package ru.ifmo.escience.compbiomed.sandbox.simulation;
 
 import ru.ifmo.escience.compbiomed.sandbox.agent.Agent;
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
+import ru.ifmo.escience.compbiomed.sandbox.agent.RealCareParticipant;
+import ru.ifmo.escience.compbiomed.sandbox.assimilation.Particle;
 import ru.ifmo.escience.compbiomed.sandbox.block.PedSource;
+import ru.ifmo.escience.compbiomed.sandbox.sensor.AdaptedSensor;
 import ru.ifmo.escience.compbiomed.sandbox.util.collection.Queue;
 import ru.ifmo.escience.compbiomed.sandbox.util.function.Action;
 
@@ -14,6 +17,9 @@ public class Simulation {
 
     private List<PedSource<? extends Pedestrian>> sources = new LinkedList<>();
     private List<? super Pedestrian> peds = new LinkedList<>();
+    private List<? super RealCareParticipant> observables = new LinkedList<>();
+    private List<? super Particle> pseudoObservables = new LinkedList<>();
+    private List<? super AdaptedSensor> observers = new LinkedList<>();
     private Queue<Event> initQueue = new Queue<>();
     private Queue<Event> eventQueue = new Queue<>();
     private long startTime;
@@ -104,5 +110,17 @@ public class Simulation {
 
     public boolean isFinished() {
         return finished;
+    }
+
+    public List<? super RealCareParticipant> getObservables() {
+        return observables;
+    }
+
+    public List<? super Particle> getPseudoObservables() {
+        return pseudoObservables;
+    }
+
+    public List<? super AdaptedSensor> getObservers() {
+        return observers;
     }
 }

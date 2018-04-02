@@ -38,4 +38,10 @@ public class CareParticipant extends TargetedPedestrian {
     public int hashCode() {
         return toString().hashCode();
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return obj instanceof CareParticipant && this.toString().equals(obj.toString());
+    }
+
 }

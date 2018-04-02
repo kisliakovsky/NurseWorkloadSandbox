@@ -4,20 +4,24 @@ import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.agent.StaticPedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
-public class SimplestSensorStub extends StaticPedestrian implements Sensor {
+public class AdaptedSensor extends StaticPedestrian implements Sensor {
 
+    private long index;
     private double detectionRadius;
 
-    public SimplestSensorStub(final Location location,
-                              final double detectionRadius) {
+    public AdaptedSensor(final Location location, final long index) {
         super(location);
-        this.detectionRadius = detectionRadius;
+        this.index = index;
+        this.detectionRadius = 10.0;
     }
 
     @Override
     public boolean check(final Pedestrian ped) {
-        final double distance = ped.distanceTo(this);
-        return distance < detectionRadius;
+        return distanceTo(ped) < detectionRadius;
     }
 
+    @Override
+    public String toString() {
+        return "sensor_" + index;
+    }
 }
