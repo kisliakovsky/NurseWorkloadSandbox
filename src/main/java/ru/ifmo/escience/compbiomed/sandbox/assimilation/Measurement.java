@@ -6,7 +6,9 @@ public interface Measurement {
 
     double A = 2;
 
-    static double calculateWeight(final List<Boolean> realVector, final List<Boolean> particleVector) {
+    static double calculateWeight(final List<Boolean> realVector,
+                                  final List<Boolean> particleVector) {
+        double accumulator = 1;
         for (int i = 0; i < realVector.size(); ++i) {
             final boolean realComponent = realVector.get(i);
             final boolean particleComponent = particleVector.get(i);
@@ -18,9 +20,9 @@ public interface Measurement {
             } else {
                 d = A;
             }
+            accumulator *= Math.exp(-(d * d) / 2) / Math.sqrt(2 * Math.PI);
         }
-        // TODO: Complete the method.
-        return 0.0;
+        return accumulator;
     }
 
 }
