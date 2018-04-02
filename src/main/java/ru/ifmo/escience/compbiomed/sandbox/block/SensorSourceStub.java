@@ -3,6 +3,7 @@ package ru.ifmo.escience.compbiomed.sandbox.block;
 import ru.ifmo.escience.compbiomed.sandbox.agent.CareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.agent.RealCareParticipant;
+import ru.ifmo.escience.compbiomed.sandbox.assimilation.Measurement;
 import ru.ifmo.escience.compbiomed.sandbox.assimilation.Particle;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.AdaptedSensor;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.ProtoSensorVector;
@@ -22,40 +23,37 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
         this.locations = locations;
     }
 
-    private static void makePoll(final Simulation simulation,
-                                 final double time) {
+    private static void makePoll(final Simulation simulation, final double time) {
         simulation.addEvent(new AbstractEvent(time) {
             @Override
             public void execute() {
                 final List<? super RealCareParticipant> observables = simulation.getObservables();
                 final List<? super Particle> pseudoObservables = simulation.getPseudoObservables();
                 final List<? super AdaptedSensor> observers = simulation.getObservers();
-                final Map<? super CareParticipant, List<AdaptedSensor>> observablesData = new HashMap<>();
                 for (final Object observable: observables) {
-                    final List<AdaptedSensor> observableData = new LinkedList<>();
+                    final List<Boolean> observableData = new LinkedList<>();
                     for (final Object observer: observers) {
                         if (((AdaptedSensor) observer).check((Pedestrian) observable)) {
-                            observableData.add((AdaptedSensor) observer);
+                            observableData.add(true);
                         } else {
-                            observableData.add(null);
+                            observableData.add(false);
                         }
                     }
-                    observablesData.put((RealCareParticipant) observable, observableData);
-                }
-                final Map<? super CareParticipant, List<AdaptedSensor>> pseudoObservablesData = new HashMap<>();
-                for (final Object pseudoObservable: pseudoObservables) {
-                    final List<AdaptedSensor> pseudoObservableData = new LinkedList<>();
-                    for (final Object observer: observers) {
-                        if (((AdaptedSensor) observer).check((Pedestrian) pseudoObservable)) {
-                            pseudoObservableData.add((AdaptedSensor) observer);
-                        } else {
-                            pseudoObservableData.add(null);
+                    for (final Object pseudoObservable: pseudoObservables) {
+                        if (observable.equals(((Particle) pseudoObservable).getObject())) {
+                            final List<Boolean> pseudoObservableData = new LinkedList<>();
+                            for (final Object observer: observers) {
+                                if (((AdaptedSensor) observer).check((Pedestrian) pseudoObservable)) {
+                                    pseudoObservableData.add(true);
+                                } else {
+                                    pseudoObservableData.add(false);
+                                }
+                            }
+                            // TODO: Change particle weights
+                            final double weight = Measurement.calculateWeight(observableData, pseudoObservableData);
                         }
                     }
-                    pseudoObservablesData.put((Particle) pseudoObservable, pseudoObservableData);
                 }
-                System.out.println(new ProtoSensorVector(observablesData));
-                System.out.println(new ProtoSensorVector(pseudoObservablesData));
                 makePoll(simulation, time + 1e-3);
             }});
     }
