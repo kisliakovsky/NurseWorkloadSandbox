@@ -27,7 +27,8 @@ public class ParticleSourceStub extends AbstractPedSource<Particle> {
                 final Particle particle = new Particle(
                         Location.defaultLocation(),
                         Location.defaultLocation(),
-                        i
+                        i,
+                        1.0 / num
                 );
                 particle.onCreate();
                 particles.add(particle);

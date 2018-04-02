@@ -3,10 +3,13 @@ package ru.ifmo.escience.compbiomed.sandbox.block;
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.agent.TargetedPedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.BasicSensorStub;
+import ru.ifmo.escience.compbiomed.sandbox.sensor.SensorVector;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.AbstractEvent;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
@@ -20,20 +23,26 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
     }
 
     private static void makePoll(final Simulation simulation,
-                                 final BasicSensorStub sensor,
+                                 final List<BasicSensorStub> sensors,
                                  final double time) {
         simulation.addEvent(new AbstractEvent(time) {
             @Override
             public void execute() {
                 final List<? super Pedestrian> peds = simulation.getPeds();
-                for (final Object ped: peds) {
-                    if (ped instanceof TargetedPedestrian) {
-                        if (sensor.check((Pedestrian) ped)) {
-                            System.out.println("Detected " + ped.toString() + " by " + sensor.toString());
+                final List<List<TargetedPedestrian>> sensorsData = new LinkedList<>();
+                for (final BasicSensorStub sensor: sensors) {
+                    final List<TargetedPedestrian> sensorData = new LinkedList<>();
+                    for (final Object ped : peds) {
+                        if (ped instanceof TargetedPedestrian) {
+                            if (sensor.check((Pedestrian) ped)) {
+                                sensorData.add((TargetedPedestrian) ped);
+                            }
                         }
                     }
+                    sensorsData.add(sensorData);
                 }
-                makePoll(simulation, sensor, time + 1e-3);
+                System.out.println(new SensorVector(sensorsData));
+                makePoll(simulation, sensors, time + 1e-3);
             }});
     }
 
@@ -51,13 +60,13 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
                     sensor.onCreate();
                     sensors.add(sensor);
                     simulation.updatePeds();
-                    makePoll(simulation, sensor, simulation.getTime());
                 } else {
                     throw new IllegalArgumentException(
                             "There are not enough locations"
                     );
                 }
             }
+            makePoll(simulation, sensors, simulation.getTime());
         });
     }
 
