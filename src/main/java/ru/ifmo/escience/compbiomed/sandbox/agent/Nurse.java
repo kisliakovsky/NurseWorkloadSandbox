@@ -9,7 +9,7 @@ import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Nurse extends CareParticipant {
+public class Nurse extends RealCareParticipant {
 
     private int currentFloor;
     private int nextFloor;

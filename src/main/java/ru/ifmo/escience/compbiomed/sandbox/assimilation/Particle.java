@@ -1,6 +1,7 @@
 package ru.ifmo.escience.compbiomed.sandbox.assimilation;
 
 import ru.ifmo.escience.compbiomed.sandbox.agent.CareParticipant;
+import ru.ifmo.escience.compbiomed.sandbox.agent.RealCareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.util.math.Range;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Direction;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
@@ -28,7 +29,7 @@ public class Particle extends CareParticipant {
         this.weight = weight;
     }
 
-    public static List<Particle> createParticles(final CareParticipant careParticipant, final int num) {
+    public static List<Particle> createParticles(final RealCareParticipant careParticipant, final int num) {
         final Random xRandom = new Random();
         final Random yRandom = new Random();
         final Random alphaRandom = new Random();

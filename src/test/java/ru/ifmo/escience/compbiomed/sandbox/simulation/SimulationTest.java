@@ -3,6 +3,7 @@ package ru.ifmo.escience.compbiomed.sandbox.simulation;
 import org.junit.Before;
 import org.junit.Test;
 import ru.ifmo.escience.compbiomed.sandbox.agent.CareParticipant;
+import ru.ifmo.escience.compbiomed.sandbox.agent.RealCareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.block.PedSource;
 
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ public class SimulationTest {
 
     @Test
     public void checkSource() {
-        final List<Function<Simulation, PedSource<? extends CareParticipant>>> sourceFactories = new ArrayList<>();
+        final List<Function<Simulation, PedSource<? extends RealCareParticipant>>> sourceFactories = new ArrayList<>();
         sourceFactories.add(PedSource::createNurseSource);
         sourceFactories.add(PedSource::createPatientSource);
         sourceFactories.stream().map((sourceFactory) -> {
-            final PedSource<? extends CareParticipant> source = sourceFactory.apply(simulation);
+            final PedSource<? extends RealCareParticipant> source = sourceFactory.apply(simulation);
             simulation.addSource(source);
             return source;
         }).forEach(source -> source.inject(1));

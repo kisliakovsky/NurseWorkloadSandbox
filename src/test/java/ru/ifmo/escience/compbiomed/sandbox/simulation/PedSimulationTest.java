@@ -3,6 +3,7 @@ package ru.ifmo.escience.compbiomed.sandbox.simulation;
 import org.junit.Before;
 import org.junit.Test;
 import ru.ifmo.escience.compbiomed.sandbox.agent.CareParticipant;
+import ru.ifmo.escience.compbiomed.sandbox.agent.RealCareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.block.NurseSourceStub;
 import ru.ifmo.escience.compbiomed.sandbox.block.PedSource;
 
@@ -22,12 +23,12 @@ public class PedSimulationTest {
 
     @Test
     public void checkPedestrianEvents() {
-        final PedSource<? extends CareParticipant> source = new NurseSourceStub(simulation);
+        final PedSource<? extends RealCareParticipant> source = new NurseSourceStub(simulation);
         simulation.addSource(source);
         source.inject(1);
         simulation.run();
-        final List<? extends CareParticipant> peds = source.peds();
-        final CareParticipant careParticipant = peds.get(0);
+        final List<? extends RealCareParticipant> peds = source.peds();
+        final RealCareParticipant careParticipant = peds.get(0);
         assertThat(careParticipant.getX(), closeTo(90.0, 1e-3));
         assertThat(careParticipant.getY(), closeTo(90.0, 1e-3));
     }

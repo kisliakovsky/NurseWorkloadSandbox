@@ -2,6 +2,7 @@ package ru.ifmo.escience.compbiomed.sandbox.block;
 
 import ru.ifmo.escience.compbiomed.sandbox.agent.CareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
+import ru.ifmo.escience.compbiomed.sandbox.agent.RealCareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.BasicSensorStub;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.SensorVector;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.AbstractEvent;
@@ -27,9 +28,9 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
             @Override
             public void execute() {
                 final List<? super Pedestrian> peds = simulation.getPeds();
-                final Map<CareParticipant, List<BasicSensorStub>> pedsData = new HashMap<>();
+                final Map<RealCareParticipant, List<BasicSensorStub>> pedsData = new HashMap<>();
                 for (final Object ped : peds) {
-                    if (ped instanceof CareParticipant) {
+                    if (ped instanceof RealCareParticipant) {
                         final List<BasicSensorStub> pedData = new LinkedList<>();
                         for (final BasicSensorStub sensor: sensors) {
                             if (sensor.check((Pedestrian) ped)) {
@@ -38,7 +39,7 @@ public class SensorSourceStub extends AbstractPedSource<BasicSensorStub> {
                                 pedData.add(null);
                             }
                         }
-                        pedsData.put((CareParticipant) ped, pedData);
+                        pedsData.put((RealCareParticipant) ped, pedData);
                     }
                 }
                 System.out.println(new SensorVector(pedsData));

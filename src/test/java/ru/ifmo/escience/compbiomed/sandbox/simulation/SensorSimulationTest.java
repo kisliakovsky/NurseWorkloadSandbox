@@ -3,6 +3,7 @@ package ru.ifmo.escience.compbiomed.sandbox.simulation;
 import org.junit.Before;
 import org.junit.Test;
 import ru.ifmo.escience.compbiomed.sandbox.agent.CareParticipant;
+import ru.ifmo.escience.compbiomed.sandbox.agent.RealCareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.agent.StaticPedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.block.NurseSourceStub;
 import ru.ifmo.escience.compbiomed.sandbox.block.PedSource;
@@ -26,7 +27,7 @@ public class SensorSimulationTest {
 
     @Test
     public void checkPedestrianEvents() {
-        final PedSource<? extends CareParticipant> nurseSource = new NurseSourceStub(simulation);
+        final PedSource<? extends RealCareParticipant> nurseSource = new NurseSourceStub(simulation);
         final PedSource<? extends StaticPedestrian> sensorSource =
                 new SensorSourceStub(simulation, new ArrayList<Location>() {{
                     add(Location.byCoordinates(40.0, 30.0));
