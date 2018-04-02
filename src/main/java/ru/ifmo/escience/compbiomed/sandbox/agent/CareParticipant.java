@@ -6,8 +6,8 @@ public class CareParticipant extends TargetedPedestrian {
 
     private String id;
 
-    public CareParticipant(final Location location, final Location destination, final long index) {
-        super(location, destination);
+    public CareParticipant(final Location location, final Location target, final long index) {
+        super(location, target);
         id = this.getClass().getSimpleName().toLowerCase() + "_" + index;
     }
 

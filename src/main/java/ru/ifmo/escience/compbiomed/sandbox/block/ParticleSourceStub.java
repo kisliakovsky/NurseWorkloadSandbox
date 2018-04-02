@@ -14,7 +14,7 @@ public class ParticleSourceStub extends AbstractPedSource<Particle> {
 
     private static void moveParticle(final Simulation simulation, final Particle particle) {
        // TODO: It must be implemented.
-       // TODO: Probably, the particles must be related with a nurse (an agent of Nurse type) and a sensor.
+       // TODO: Probably, the particles must be related with a nurse (an agent of Nurse type).
     }
 
     @Override
@@ -22,19 +22,19 @@ public class ParticleSourceStub extends AbstractPedSource<Particle> {
         final Simulation simulation = getSimulation();
         final List<Particle> particles = peds();
         simulation.addInitEvent(() -> {
-            for (int i = 0; i < num; ++i) {
-                // TODO: The locations must be replaced with real ones.
-                final Particle particle = new Particle(
-                        Location.defaultLocation(),
-                        Location.defaultLocation(),
-                        i,
-                        1.0 / num
-                );
-                particle.onCreate();
-                particles.add(particle);
-                simulation.updatePeds();
-                moveParticle(simulation, particle);
-            }
+//            for (int i = 0; i < num; ++i) {
+//                // TODO: The locations must be replaced with real ones.
+//                final Particle particle = new Particle(
+//                        Location.defaultLocation(),
+//                        Location.defaultLocation(),
+//                        i,
+//                        1.0 / num
+//                );
+//                particle.onCreate();
+//                particles.add(particle);
+//                simulation.updatePeds();
+//                moveParticle(simulation, particle);
+//            }
         });
     }
 
