@@ -33,11 +33,10 @@ class ParticleSourceStub extends AbstractPedSource<Particle> {
     @Override
     public void inject(final int num) {
         final Simulation simulation = getSimulation();
-        final Map<? super RealCareParticipant, List<Particle>> pseudoObservablesByObservables = simulation.getPseudoObservables();
+        final Map<? super RealCareParticipant, List<Particle>> pseudoObservablesByObservables = simulation.getPseudoObservablesByObservables();
         final List<Particle> newParticles = Particle.createParticles(careParticipant, num);
-        pseudoObservables.addAll(newParticles);
-        simulation.updatePeds();
-        moveParticles(simulation, particles);
+        pseudoObservablesByObservables.put(careParticipant, newParticles);
+        moveParticles(simulation, newParticles);
     }
 }
 
@@ -62,7 +61,6 @@ public class NurseParticleSourceStub extends AbstractPedSource<Nurse> {
                nurse.onCreate();
                nurses.add(nurse);
                observables.add(nurse);
-               simulation.updatePeds();
                final PedSource<? extends Particle> particleSource = new ParticleSourceStub(simulation, nurse);
                simulation.addSource(particleSource);
                particleSource.inject(50);

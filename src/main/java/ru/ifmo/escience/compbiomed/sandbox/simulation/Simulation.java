@@ -103,7 +103,7 @@ public class Simulation {
         return observables;
     }
 
-    public Map<? super RealCareParticipant, List<Particle>> getPseudoObservables() {
+    public Map<? super RealCareParticipant, List<Particle>> getPseudoObservablesByObservables() {
         return pseudoObservables;
     }
 
