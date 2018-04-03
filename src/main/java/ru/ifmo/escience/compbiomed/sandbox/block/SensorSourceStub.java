@@ -54,6 +54,21 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
                         }
                     }
                 }
+
+                for (final Object observable: observables) {
+                    double sum = 0.0;
+                    for (final Object pseudoObservable: pseudoObservables) {
+                        if (observable.equals(((Particle) pseudoObservable).getObject())) {
+                            sum += ((Particle) pseudoObservable).getWeight();
+                        }
+                    }
+                    for (final Object pseudoObservable: pseudoObservables) {
+                        if (observable.equals(((Particle) pseudoObservable).getObject())) {
+                            final double finalSum = sum;
+                            ((Particle) pseudoObservable).updateWeight((oldWeight) -> oldWeight / finalSum);
+                        }
+                    }
+                }
                 makePoll(simulation, time + 1e-3);
             }});
     }
