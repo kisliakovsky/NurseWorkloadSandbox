@@ -8,6 +8,7 @@ import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
 import java.util.List;
+import java.util.Map;
 
 class ParticleSourceStub extends AbstractPedSource<Particle> {
 
@@ -32,10 +33,8 @@ class ParticleSourceStub extends AbstractPedSource<Particle> {
     @Override
     public void inject(final int num) {
         final Simulation simulation = getSimulation();
-        final List<Particle> particles = peds();
-        final List<Particle> pseudoObservables = simulation.getPseudoObservables();
+        final Map<? super RealCareParticipant, List<Particle>> pseudoObservablesByObservables = simulation.getPseudoObservables();
         final List<Particle> newParticles = Particle.createParticles(careParticipant, num);
-        particles.addAll(newParticles);
         pseudoObservables.addAll(newParticles);
         simulation.updatePeds();
         moveParticles(simulation, particles);
