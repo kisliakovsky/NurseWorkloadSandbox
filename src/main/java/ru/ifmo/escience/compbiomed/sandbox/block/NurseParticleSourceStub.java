@@ -33,7 +33,7 @@ class ParticleSourceStub extends AbstractPedSource<Particle> {
     public void inject(final int num) {
         final Simulation simulation = getSimulation();
         final List<Particle> particles = peds();
-        final List<? super Particle> pseudoObservables = simulation.getPseudoObservables();
+        final List<Particle> pseudoObservables = simulation.getPseudoObservables();
         final List<Particle> newParticles = Particle.createParticles(careParticipant, num);
         particles.addAll(newParticles);
         pseudoObservables.addAll(newParticles);

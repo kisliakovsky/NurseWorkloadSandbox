@@ -5,6 +5,7 @@ import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.agent.RealCareParticipant;
 import ru.ifmo.escience.compbiomed.sandbox.assimilation.Measurement;
 import ru.ifmo.escience.compbiomed.sandbox.assimilation.Particle;
+import ru.ifmo.escience.compbiomed.sandbox.assimilation.Resampling;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.AdaptedSensor;
 import ru.ifmo.escience.compbiomed.sandbox.sensor.ProtoSensorVector;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.AbstractEvent;
@@ -28,7 +29,7 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
             @Override
             public void execute() {
                 final List<? super RealCareParticipant> observables = simulation.getObservables();
-                final List<? super Particle> pseudoObservables = simulation.getPseudoObservables();
+                final List<Particle> pseudoObservables = simulation.getPseudoObservables();
                 final List<? super AdaptedSensor> observers = simulation.getObservers();
                 for (final Object observable: observables) {
                     final List<Boolean> observableData = new LinkedList<>();
@@ -39,36 +40,33 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
                             observableData.add(false);
                         }
                     }
-                    for (final Object pseudoObservable: pseudoObservables) {
-                        if (observable.equals(((Particle) pseudoObservable).getObject())) {
+                    for (final Particle pseudoObservable: pseudoObservables) {
+                        if (observable.equals(pseudoObservable.getObject())) {
                             final List<Boolean> pseudoObservableData = new LinkedList<>();
                             for (final Object observer: observers) {
-                                if (((AdaptedSensor) observer).check((Pedestrian) pseudoObservable)) {
+                                if (((AdaptedSensor) observer).check(pseudoObservable)) {
                                     pseudoObservableData.add(true);
                                 } else {
                                     pseudoObservableData.add(false);
                                 }
                             }
                             final double newWeight = Measurement.calculateWeight(observableData, pseudoObservableData);
-                            ((Particle) pseudoObservable).updateWeight((oldWeight) -> newWeight);
+                            pseudoObservable.updateWeight((oldWeight) -> newWeight);
                         }
                     }
                 }
-
                 for (final Object observable: observables) {
-                    double sum = 0.0;
-                    for (final Object pseudoObservable: pseudoObservables) {
-                        if (observable.equals(((Particle) pseudoObservable).getObject())) {
-                            sum += ((Particle) pseudoObservable).getWeight();
-                        }
-                    }
-                    for (final Object pseudoObservable: pseudoObservables) {
-                        if (observable.equals(((Particle) pseudoObservable).getObject())) {
-                            final double finalSum = sum;
-                            ((Particle) pseudoObservable).updateWeight((oldWeight) -> oldWeight / finalSum);
-                        }
-                    }
+                    final double sum = pseudoObservables.stream()
+                            .filter(pseudoObservable -> observable.equals(pseudoObservable.getObject()))
+                            .mapToDouble(Particle::getWeight)
+                            .sum();
+                    pseudoObservables.stream()
+                            .filter(pseudoObservable -> observable.equals(pseudoObservable.getObject()))
+                            .forEach(pseudoObservable -> pseudoObservable
+                                    .updateWeight((oldWeight) -> oldWeight / sum));
                 }
+                final List<Particle> newPseudoObservables = Resampling.make(pseudoObservables);
+                // TODO: Replace particles with new ones.
                 makePoll(simulation, time + 1e-3);
             }});
     }

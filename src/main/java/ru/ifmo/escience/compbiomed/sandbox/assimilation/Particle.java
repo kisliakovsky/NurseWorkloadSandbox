@@ -39,9 +39,9 @@ public class Particle extends CareParticipant {
         final Random alphaRandom = new Random();
         final List<Particle> particles = new ArrayList<>();
         for (int i = 0; i < num; ++i) {
-            final int x = Range.getIntRange(xRandom, 0, 101);
-            final int y = Range.getIntRange(yRandom, 0, 101);
-            final double alpha = Direction.fromDegrees(Range.getIntRange(alphaRandom, -179, 181)).getValue();
+            final int x = Range.getIntInRange(xRandom, 0, 101);
+            final int y = Range.getIntInRange(yRandom, 0, 101);
+            final double alpha = Direction.fromDegrees(Range.getIntInRange(alphaRandom, -179, 181)).getValue();
             final double weight = 1.0 / num;
             final double target_x = x + DEFAULT_DISPLACEMENT * Math.cos(alpha);
             final double target_y = y + DEFAULT_DISPLACEMENT * Math.cos(alpha);
