@@ -1,5 +1,8 @@
 package ru.ifmo.escience.compbiomed.sandbox.util.space;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 public class Location {
 
     private Point point;

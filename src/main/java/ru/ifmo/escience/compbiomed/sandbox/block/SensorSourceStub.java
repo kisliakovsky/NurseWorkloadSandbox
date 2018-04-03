@@ -49,8 +49,8 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
                                     pseudoObservableData.add(false);
                                 }
                             }
-                            final double weight = Measurement.calculateWeight(observableData, pseudoObservableData);
-                            ((Particle) pseudoObservable).updateWeight(weight);
+                            final double newWeight = Measurement.calculateWeight(observableData, pseudoObservableData);
+                            ((Particle) pseudoObservable).updateWeight((oldWeight) -> newWeight);
                         }
                     }
                 }

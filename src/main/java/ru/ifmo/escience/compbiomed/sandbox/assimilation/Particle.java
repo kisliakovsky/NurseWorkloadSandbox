@@ -9,6 +9,7 @@ import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 public class Particle extends CareParticipant {
 
@@ -28,8 +29,8 @@ public class Particle extends CareParticipant {
         return weight;
     }
 
-    public void updateWeight(final double weight) {
-        this.weight = weight;
+    public void updateWeight(final Function<Double, Double> updater) {
+        this.weight = updater.apply(this.weight);
     }
 
     public static List<Particle> createParticles(final RealCareParticipant object, final int num) {

@@ -2,6 +2,9 @@ package ru.ifmo.escience.compbiomed.sandbox.agent;
 
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 public class StaticPedestrian implements Pedestrian {
 
     private Location location;
@@ -32,8 +35,8 @@ public class StaticPedestrian implements Pedestrian {
         return location.distanceTo(Location.byCoordinates(other.getX(), other.getY()));
     }
 
-    public void updateLocation(final Location location) {
-        this.location = location;
+    public void updateLocation(final Function<Location, Location> updater) {
+        this.location = updater.apply(this.location);
     }
 
 }

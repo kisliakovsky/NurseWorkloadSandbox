@@ -4,6 +4,8 @@ import ru.ifmo.escience.compbiomed.sandbox.util.space.Direction;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Space;
 
+import java.util.function.Function;
+
 public class TargetedPedestrian extends StaticPedestrian {
 
     private Location target;
@@ -68,8 +70,8 @@ public class TargetedPedestrian extends StaticPedestrian {
         return Space.calculateEuclideanDistance(getX(), getY(), getTargetX(), getTargetY());
     }
 
-    public final void updateTarget(final Location target) {
-        this.target = target;
+    public final void updateTarget(final Function<Location, Location> updater) {
+        this.target = updater.apply(this.target);
     }
 
     public void move(final double time) {
@@ -78,7 +80,7 @@ public class TargetedPedestrian extends StaticPedestrian {
             final double alpha = direction.getValue();
             final double delta_x = speed * Math.cos(alpha) * time;
             final double delta_y = speed * Math.sin(alpha) * time;
-            updateLocation(Location.byCoordinates(getX() + delta_x, getY() + delta_y));
+            updateLocation((location) -> Location.byCoordinates(location.getX() + delta_x, getY() + delta_y));
         }
     }
 }
