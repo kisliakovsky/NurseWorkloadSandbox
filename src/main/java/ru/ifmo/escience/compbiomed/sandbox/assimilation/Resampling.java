@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public interface Resampling {
 
-    static List<Particle> make(final List<Particle> oldParticles) {
+    static List<Particle> apply(final List<Particle> oldParticles) {
         final Random indexRandom = new Random();
         final Random betaRandom = new Random();
         final int numberOfParticles = oldParticles.size();

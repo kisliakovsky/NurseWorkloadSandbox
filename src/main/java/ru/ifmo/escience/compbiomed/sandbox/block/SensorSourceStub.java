@@ -2,6 +2,7 @@ package ru.ifmo.escience.compbiomed.sandbox.block;
 
 import ru.ifmo.escience.compbiomed.sandbox.agent.Pedestrian;
 import ru.ifmo.escience.compbiomed.sandbox.agent.RealCareParticipant;
+import ru.ifmo.escience.compbiomed.sandbox.assimilation.Estimate;
 import ru.ifmo.escience.compbiomed.sandbox.assimilation.Measurement;
 import ru.ifmo.escience.compbiomed.sandbox.assimilation.Particle;
 import ru.ifmo.escience.compbiomed.sandbox.assimilation.Resampling;
@@ -66,8 +67,10 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
                             .filter(pseudoObservable -> observable.equals(pseudoObservable.getObject()))
                             .forEach(pseudoObservable -> pseudoObservable
                                     .updateWeight((oldWeight) -> oldWeight / sum));
-                    final List<Particle> newPseudoObservables = Resampling.make(pseudoObservables);
-                    // TODO: Replace particles with new ones.
+                    final List<Particle> newPseudoObservables = Resampling.apply(pseudoObservables);
+                    final Location estimatedLocation = Estimate.calculate(newPseudoObservables);
+                    final Location actualLocation = Location.byCoordinates(((RealCareParticipant) observable).getX(), ((RealCareParticipant) observable).getY());
+                    pseudoObservablesByObservables.put((RealCareParticipant) observable, newPseudoObservables);
                 }
                 makePoll(simulation, time + 1e-3);
             }});
