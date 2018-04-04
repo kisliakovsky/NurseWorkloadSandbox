@@ -42,6 +42,8 @@ class ParticleSourceStub extends AbstractPedSource<Particle> {
 
 public class NurseParticleSourceStub extends AbstractPedSource<Nurse> {
 
+    private static final int NUMBER_OF_PARTICLES = 10;
+
     public NurseParticleSourceStub(final Simulation simulation) {
         super(simulation);
     }
@@ -82,7 +84,7 @@ public class NurseParticleSourceStub extends AbstractPedSource<Nurse> {
                moveNurse(simulation, nurse);
                final PedSource<? extends Particle> particleSource = new ParticleSourceStub(simulation, nurse);
                simulation.addSource(particleSource);
-//               particleSource.inject(1000);
+               particleSource.inject(NUMBER_OF_PARTICLES);
            }
         });
     }
