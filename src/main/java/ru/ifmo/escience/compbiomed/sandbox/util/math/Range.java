@@ -9,7 +9,7 @@ public class Range {
     }
 
     public static double getDoubleInRange(final Random random, final double a, final double b) {
-        return a + (random.nextDouble() * (b - a));
+        return (random.nextDouble() * (b - a)) + a ;
     }
 
 }
