@@ -42,7 +42,7 @@ class ParticleSourceStub extends AbstractPedSource<Particle> {
 
 public class NurseParticleSourceStub extends AbstractPedSource<Nurse> {
 
-    private static final int NUMBER_OF_PARTICLES = 10;
+    private static final int NUMBER_OF_PARTICLES = 1000;
 
     public NurseParticleSourceStub(final Simulation simulation) {
         super(simulation);
