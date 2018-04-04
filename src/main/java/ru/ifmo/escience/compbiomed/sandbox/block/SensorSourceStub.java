@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
 
-    private static final double POLL_STEP = 1e-1;
+    private static final double POLL_STEP = 1.0;
     private final List<Location> locations;
 
     public SensorSourceStub(final Simulation simulation,

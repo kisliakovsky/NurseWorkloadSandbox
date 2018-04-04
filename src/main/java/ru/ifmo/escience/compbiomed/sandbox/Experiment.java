@@ -6,7 +6,6 @@ import ru.ifmo.escience.compbiomed.sandbox.sensor.Attractor;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -14,7 +13,7 @@ import java.util.function.Function;
 public class Experiment {
 
     // These variables correspond to Main variables in the AnyLogic project
-    public static final List<Attractor> PATIENT_ROOMS_FLOOR_7 = new LinkedList<>();
+    public static final List<Attractor> PATIENT_ROOMS_FLOOR_7 = new ArrayList<>();
 
     static {
         for (int i = 0; i < 17; ++i) {
