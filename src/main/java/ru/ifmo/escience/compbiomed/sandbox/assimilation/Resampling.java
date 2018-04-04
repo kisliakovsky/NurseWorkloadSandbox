@@ -26,11 +26,10 @@ public interface Resampling {
                 beta -= oldWeights.get(index);
                 index = (index + 1) % numberOfParticles;
             }
-            newParticles.add(oldParticles.get(index));
+            newParticles.add(new Particle(oldParticles.get(index)));
         }
         final double newWeightsSum = newParticles.stream().mapToDouble(Particle::getWeight).sum();
         newParticles.forEach(particle -> particle.updateWeight(weight -> weight / newWeightsSum));
-        final double newNewWeightsSum = newParticles.stream().mapToDouble(Particle::getWeight).sum();
         return newParticles;
     }
 
