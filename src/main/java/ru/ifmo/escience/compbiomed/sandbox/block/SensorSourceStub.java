@@ -14,6 +14,7 @@ import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
 
@@ -42,35 +43,39 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
                         }
                     }
                     final List<Particle> pseudoObservables = pseudoObservablesByObservables.get((RealCareParticipant) observable);
-                    for (final Particle pseudoObservable: pseudoObservables) {
-                        if (observable.equals(pseudoObservable.getObject())) {
-                            final List<Boolean> pseudoObservableData = new LinkedList<>();
-                            for (final Object observer: observers) {
-                                if (((AdaptedSensor) observer).check(pseudoObservable)) {
-                                    pseudoObservableData.add(true);
-                                } else {
-                                    pseudoObservableData.add(false);
+                    if (Objects.nonNull(pseudoObservables)) {
+                        for (final Particle pseudoObservable : pseudoObservables) {
+                            if (observable.equals(pseudoObservable.getObject())) {
+                                final List<Boolean> pseudoObservableData = new LinkedList<>();
+                                for (final Object observer : observers) {
+                                    if (((AdaptedSensor) observer).check(pseudoObservable)) {
+                                        pseudoObservableData.add(true);
+                                    } else {
+                                        pseudoObservableData.add(false);
+                                    }
                                 }
+                                final double newWeight = Measurement.calculateWeight(observableData, pseudoObservableData);
+                                pseudoObservable.updateWeight((oldWeight) -> newWeight);
                             }
-                            final double newWeight = Measurement.calculateWeight(observableData, pseudoObservableData);
-                            pseudoObservable.updateWeight((oldWeight) -> newWeight);
                         }
                     }
                 }
                 for (final Object observable: observables) {
                     final List<Particle> pseudoObservables = pseudoObservablesByObservables.get((RealCareParticipant) observable);
-                    final double sum = pseudoObservables.stream()
-                            .filter(pseudoObservable -> observable.equals(pseudoObservable.getObject()))
-                            .mapToDouble(Particle::getWeight)
-                            .sum();
-                    pseudoObservables.stream()
-                            .filter(pseudoObservable -> observable.equals(pseudoObservable.getObject()))
-                            .forEach(pseudoObservable -> pseudoObservable
-                                    .updateWeight((oldWeight) -> oldWeight / sum));
-                    final List<Particle> newPseudoObservables = Resampling.apply(pseudoObservables);
-                    final Location estimatedLocation = Estimate.calculate(newPseudoObservables);
-                    final Location actualLocation = Location.byCoordinates(((RealCareParticipant) observable).getX(), ((RealCareParticipant) observable).getY());
-                    pseudoObservablesByObservables.put((RealCareParticipant) observable, newPseudoObservables);
+                    if (Objects.nonNull(pseudoObservables)) {
+                        final double sum = pseudoObservables.stream()
+                                .filter(pseudoObservable -> observable.equals(pseudoObservable.getObject()))
+                                .mapToDouble(Particle::getWeight)
+                                .sum();
+                        pseudoObservables.stream()
+                                .filter(pseudoObservable -> observable.equals(pseudoObservable.getObject()))
+                                .forEach(pseudoObservable -> pseudoObservable
+                                        .updateWeight((oldWeight) -> oldWeight / sum));
+                        final List<Particle> newPseudoObservables = Resampling.apply(pseudoObservables);
+                        final Location estimatedLocation = Estimate.calculate(newPseudoObservables);
+                        final Location actualLocation = Location.byCoordinates(((RealCareParticipant) observable).getX(), ((RealCareParticipant) observable).getY());
+                        pseudoObservablesByObservables.put((RealCareParticipant) observable, newPseudoObservables);
+                    }
                 }
                 makePoll(simulation, time + 1e-3);
             }});
