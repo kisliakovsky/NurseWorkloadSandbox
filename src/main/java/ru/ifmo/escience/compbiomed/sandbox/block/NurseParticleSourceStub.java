@@ -8,6 +8,7 @@ import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
 import java.util.List;
+import java.util.Map;
 
 class ParticleSourceStub extends AbstractPedSource<Particle> {
 
@@ -32,21 +33,38 @@ class ParticleSourceStub extends AbstractPedSource<Particle> {
     @Override
     public void inject(final int num) {
         final Simulation simulation = getSimulation();
-        final List<Particle> particles = peds();
-        final List<Particle> pseudoObservables = simulation.getPseudoObservables();
+        final Map<? super RealCareParticipant, List<Particle>> pseudoObservablesByObservables = simulation.getPseudoObservablesByObservables();
         final List<Particle> newParticles = Particle.createParticles(careParticipant, num);
-        particles.addAll(newParticles);
-        pseudoObservables.addAll(newParticles);
-        simulation.updatePeds();
-        moveParticles(simulation, particles);
+        pseudoObservablesByObservables.put(careParticipant, newParticles);
+        moveParticles(simulation, newParticles);
     }
 }
 
 public class NurseParticleSourceStub extends AbstractPedSource<Nurse> {
 
+    private static final int NUMBER_OF_PARTICLES = 1000;
+
     public NurseParticleSourceStub(final Simulation simulation) {
         super(simulation);
     }
+
+    private static void moveNurse(final Simulation simulation, final Nurse nurse) {
+        final double estimatedTime = nurse.getDisplacement() / nurse.getSpeed();
+        final long numberOfSteps = (long) Math.ceil(estimatedTime / 1e-3);
+        for (int i = 0; i < numberOfSteps; ++i) {
+            if (!nurse.isArrived()) {
+                simulation.addEvent(new AbstractEvent(i * 1e-3) {
+                    @Override
+                    public void execute() {
+                        nurse.move(1e-3);
+                    }
+                });
+            } else {
+                break;
+            }
+        }
+    }
+
 
     @Override
     public void inject(final int num) {
@@ -63,10 +81,10 @@ public class NurseParticleSourceStub extends AbstractPedSource<Nurse> {
                nurse.onCreate();
                nurses.add(nurse);
                observables.add(nurse);
-               simulation.updatePeds();
+               moveNurse(simulation, nurse);
                final PedSource<? extends Particle> particleSource = new ParticleSourceStub(simulation, nurse);
                simulation.addSource(particleSource);
-               particleSource.inject(50);
+               particleSource.inject(NUMBER_OF_PARTICLES);
            }
         });
     }

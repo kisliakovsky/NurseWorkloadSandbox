@@ -9,17 +9,14 @@ import ru.ifmo.escience.compbiomed.sandbox.sensor.AdaptedSensor;
 import ru.ifmo.escience.compbiomed.sandbox.util.collection.Queue;
 import ru.ifmo.escience.compbiomed.sandbox.util.function.Action;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 
 public class Simulation {
 
     private List<PedSource<? extends Pedestrian>> sources = new ArrayList<>();
-    private List<? super Pedestrian> peds = new ArrayList<>();
     private List<? super RealCareParticipant> observables = new ArrayList<>();
-    private List<Particle> pseudoObservables = new ArrayList<>();
+    private Map<? super RealCareParticipant, List<Particle>> pseudoObservables = new HashMap<>();
     private List<? super AdaptedSensor> observers = new ArrayList<>();
     private Queue<Event> initQueue = new Queue<>();
     private Queue<Event> eventQueue = new Queue<>();
@@ -98,17 +95,6 @@ public class Simulation {
         sources.add(source);
     }
 
-    public void updatePeds() {
-        peds = new LinkedList<>();
-        for (final PedSource<? extends Pedestrian> pedSource: sources) {
-            peds.addAll(pedSource.peds());
-        }
-    }
-
-    public List<? super Pedestrian> getPeds() {
-        return peds;
-    }
-
     public boolean isFinished() {
         return finished;
     }
@@ -117,7 +103,7 @@ public class Simulation {
         return observables;
     }
 
-    public List<Particle> getPseudoObservables() {
+    public Map<? super RealCareParticipant, List<Particle>> getPseudoObservablesByObservables() {
         return pseudoObservables;
     }
 

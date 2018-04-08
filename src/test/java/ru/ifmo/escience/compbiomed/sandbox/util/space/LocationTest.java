@@ -8,6 +8,8 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 
 import static java.lang.Math.PI;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
@@ -32,9 +34,8 @@ public class LocationTest {
     @Parameterized.Parameter(value = 1)
     public double y;
 
-    @Ignore
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void checkIncorrectInitialization() {
-        Location.byCoordinates(x, y);
+        assertThat(Location.byCoordinates(x, y).isCorrect(), is(false));
     }
 }

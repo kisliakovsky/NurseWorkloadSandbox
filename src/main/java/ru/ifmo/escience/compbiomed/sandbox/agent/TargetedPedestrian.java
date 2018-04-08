@@ -81,6 +81,7 @@ public class TargetedPedestrian extends StaticPedestrian {
             final double delta_x = speed * Math.cos(alpha) * time;
             final double delta_y = speed * Math.sin(alpha) * time;
             updateLocation((location) -> Location.byCoordinates(location.getX() + delta_x, getY() + delta_y));
+//            System.out.println(toString() + " at (" + getX() + ";" + getY() + ")");
         }
     }
 }

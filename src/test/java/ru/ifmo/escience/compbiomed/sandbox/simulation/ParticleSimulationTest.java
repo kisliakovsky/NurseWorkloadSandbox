@@ -18,7 +18,7 @@ public class ParticleSimulationTest {
 
     @Before
     public void setUp() {
-        simulation = new Simulation(25.0, 250.0);
+        simulation = new Simulation(25.0);
     }
 
     @Test

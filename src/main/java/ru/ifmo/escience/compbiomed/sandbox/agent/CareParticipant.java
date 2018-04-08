@@ -26,12 +26,12 @@ public class CareParticipant extends TargetedPedestrian {
 
     @Override
     public void onCreate() {
-        System.out.println("Hi! I'm " + toString());
+//        System.out.println("Hi! I'm " + toString());
     }
 
     @Override
     public void onStartup() {
-        System.out.println("I (" + toString() + ") am going to start!");
+//        System.out.println("I (" + toString() + ") am going to start!");
     }
 
     @Override

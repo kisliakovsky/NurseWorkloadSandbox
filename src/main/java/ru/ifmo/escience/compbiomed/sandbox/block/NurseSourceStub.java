@@ -43,7 +43,6 @@ public class NurseSourceStub extends AbstractPedSource<Nurse> {
                 );
                 nurse.onCreate();
                 nurses.add(nurse);
-                simulation.updatePeds();
                 moveNurse(simulation, nurse);
             }
         });

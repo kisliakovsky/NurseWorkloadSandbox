@@ -25,6 +25,12 @@ public class Particle extends CareParticipant {
         this.object = object;
     }
 
+    public Particle(final Particle particle) {
+        super(Location.byCoordinates(particle.getX(), particle.getY()), Location.byCoordinates(particle.getTargetX(), particle.getTargetY()), 0);
+        this.weight = particle.getWeight();
+        this.object = particle.getObject();
+    }
+
     public double getWeight() {
         return weight;
     }
@@ -52,6 +58,10 @@ public class Particle extends CareParticipant {
             particles.add(particle);
         }
         return particles;
+    }
+
+    public boolean isCorrectlyLocated() {
+        return Location.byCoordinates(getX(), getY()).isCorrect();
     }
 
     public RealCareParticipant getObject() {
