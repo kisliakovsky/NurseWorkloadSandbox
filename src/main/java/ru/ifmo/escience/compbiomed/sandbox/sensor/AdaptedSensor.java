@@ -17,7 +17,7 @@ public class AdaptedSensor extends StaticPedestrian implements Sensor {
 
     @Override
     public boolean check(final Pedestrian ped) {
-        return distanceTo(ped) < detectionRadius;
+        return Double.compare(distanceTo(ped), detectionRadius) < 0;
     }
 
     @Override
