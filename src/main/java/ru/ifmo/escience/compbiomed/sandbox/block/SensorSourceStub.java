@@ -11,7 +11,10 @@ import ru.ifmo.escience.compbiomed.sandbox.simulation.AbstractEvent;
 import ru.ifmo.escience.compbiomed.sandbox.simulation.Simulation;
 import ru.ifmo.escience.compbiomed.sandbox.util.space.Location;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
@@ -26,8 +29,8 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
     }
 
     private static void calculateWeights(List<? super RealCareParticipant> agents,
-            final Map<? super RealCareParticipant, List<Particle>> particlesByAgents,
-            final List<? super AdaptedSensor> sensors) {
+                                         final Map<? super RealCareParticipant, List<Particle>> particlesByAgents,
+                                         final List<? super AdaptedSensor> sensors) {
         agents.forEach(agent -> {
             final List<Boolean> agentVector = sensors.stream()
                     .map(sensor -> ((AdaptedSensor) sensor).check((Pedestrian) agent))
@@ -35,20 +38,18 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
             final List<Particle> particles = particlesByAgents.get((RealCareParticipant) agent);
             if (Objects.nonNull(particles)) {
                 particles.forEach(particle -> {
-                    if (agent.equals(particle.getObject())) {
-                        final List<Boolean> particleVector = sensors.stream()
-                                .map(sensor -> ((AdaptedSensor) sensor).check(particle))
-                                .collect(Collectors.toCollection(ArrayList::new));
-                        particle.updateWeight((oldWeight) -> {
-                            final double newWeight;
-                            if (particle.isCorrectlyLocated()) {
-                                newWeight = Measurement.calculateWeight(agentVector, particleVector);
-                            } else {
-                                newWeight = 0.0;
-                            }
-                            return newWeight;
-                        });
-                    }
+                    final List<Boolean> particleVector = sensors.stream()
+                            .map(sensor -> ((AdaptedSensor) sensor).check(particle))
+                            .collect(Collectors.toCollection(ArrayList::new));
+                    particle.updateWeight((oldWeight) -> {
+                        final double newWeight;
+                        if (particle.isCorrectlyLocated()) {
+                            newWeight = Measurement.calculateWeight(agentVector, particleVector);
+                        } else {
+                            newWeight = 0.0;
+                        }
+                        return newWeight;
+                    });
                 });
             }
         });
@@ -80,7 +81,8 @@ public class SensorSourceStub extends AbstractPedSource<AdaptedSensor> {
                 });
                 makePoll(simulation, time + POLL_STEP);
 
-            }});
+            }
+        });
     }
 
     @Override
